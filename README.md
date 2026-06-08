@@ -1,8 +1,9 @@
-# SmoothConv & DuplexConv: Large-Scale Chinese Full-Duplex Speech Datasets for Conversational AI
 
 <p align="center">
   <img src="figs/logo.png" alt="SmoothConv & DuplexConv" width="640">
 </p>
+
+# SmoothConv & DuplexConv: Large-Scale Chinese Full-Duplex Speech Datasets for Conversational AI
 
 <p align="center">
   <a href=""><img src="https://img.shields.io/badge/arXiv-Paper-COLOR.svg" alt="arXiv"></a>
