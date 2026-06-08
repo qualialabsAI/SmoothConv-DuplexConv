@@ -21,18 +21,22 @@
 			--line: #dce3ee;
 			--smooth: #2563eb;
 			--smooth-soft: #eff6ff;
+			--smooth-glow: rgba(37, 99, 235, 0.12);
 			--duplex: #059669;
 			--duplex-soft: #ecfdf5;
+			--duplex-glow: rgba(5, 150, 105, 0.12);
 			--dark: #0c1220;
 			--max: 1280px;
-			--radius: 12px;
-			--shadow: 0 1px 3px rgba(26, 35, 50, 0.04), 0 10px 36px rgba(26, 35, 50, 0.07);
+			--radius: 14px;
+			--radius-sm: 8px;
+			--shadow: 0 1px 2px rgba(26, 35, 50, 0.04), 0 8px 32px rgba(26, 35, 50, 0.06);
+			--shadow-lg: 0 4px 16px rgba(26, 35, 50, 0.06), 0 20px 56px rgba(37, 99, 235, 0.08);
 			--page-pad: 2rem;
 		}
 
 		*, *::before, *::after { box-sizing: border-box; }
 
-		html { scroll-behavior: smooth; }
+		html { scroll-behavior: smooth; scroll-padding-top: 1.5rem; }
 
 		body {
 			margin: 0;
@@ -135,18 +139,23 @@
 		.hero-panel.surface {
 			background: linear-gradient(
 				135deg,
-				rgba(255, 255, 255, 0.88) 0%,
-				rgba(239, 246, 255, 0.78) 45%,
-				rgba(236, 253, 245, 0.78) 100%
+				rgba(255, 255, 255, 0.92) 0%,
+				rgba(239, 246, 255, 0.82) 42%,
+				rgba(236, 253, 245, 0.82) 100%
 			);
+			box-shadow: var(--shadow-lg);
 		}
 
-		.abstract.surface {
-			background: linear-gradient(
-				160deg,
-				rgba(255, 255, 255, 0.82) 0%,
-				rgba(248, 250, 252, 0.72) 100%
-			);
+		.hero-panel.surface::before {
+			content: "";
+			position: absolute;
+			top: 0;
+			left: 10%;
+			right: 10%;
+			height: 3px;
+			border-radius: 0 0 4px 4px;
+			background: linear-gradient(90deg, var(--smooth), #6366f1, var(--duplex));
+			opacity: 0.85;
 		}
 
 		.dataset-panel.smooth.surface {
@@ -231,23 +240,27 @@
 			top: 1rem;
 			right: 1rem;
 			display: inline-flex;
-			border: 1px solid var(--line);
-			border-radius: 6px;
+			border: 1px solid rgba(255, 255, 255, 0.8);
+			border-radius: 999px;
 			overflow: hidden;
-			background: var(--paper);
+			background: rgba(255, 255, 255, 0.72);
+			backdrop-filter: blur(8px);
+			-webkit-backdrop-filter: blur(8px);
+			box-shadow: 0 1px 4px rgba(26, 35, 50, 0.06);
 			font-size: 13px;
 			line-height: 1;
 		}
 
 		.lang-switch button {
 			margin: 0;
-			padding: 0.45rem 0.7rem;
+			padding: 0.45rem 0.75rem;
 			border: none;
 			background: transparent;
 			color: var(--muted);
 			cursor: pointer;
 			font-family: inherit;
 			font-size: inherit;
+			transition: color 0.15s, background 0.15s;
 		}
 
 		.lang-switch button:hover {
@@ -255,7 +268,7 @@
 		}
 
 		.lang-switch button.active {
-			background: var(--ink);
+			background: linear-gradient(135deg, var(--smooth), #3b82f6);
 			color: #fff;
 		}
 
@@ -265,21 +278,23 @@
 		}
 
 		.hero-logo {
-			margin: 0;
-			padding: 0;
+			text-align: center;
+			margin: 0 0 0.25rem;
 			line-height: 0;
 		}
 
 		.hero-logo h1 {
-			max-width: 880px;
-			margin: 0 auto;
+			margin: 0;
 			line-height: 0;
 		}
 
 		.hero-logo img {
 			display: block;
 			width: 100%;
+			max-width: 860px;
 			height: auto;
+			margin: 0 auto;
+			mix-blend-mode: multiply;
 		}
 
 		.hero-caption {
@@ -308,46 +323,100 @@
 		}
 
 		.hero-org {
-			margin-top: 0.75rem;
-			font-size: 0.875rem;
+			margin-top: 0.65rem;
+			font-size: 0.8125rem;
+			font-weight: 500;
 			color: #8b95a5;
-			letter-spacing: 0.02em;
+			letter-spacing: 0.06em;
+			text-transform: uppercase;
 		}
+
+		.hero-stats {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			gap: 0.5rem;
+			margin-top: 1.1rem;
+		}
+
+		.hero-stat {
+			display: inline-flex;
+			align-items: center;
+			gap: 0.35rem;
+			padding: 0.35rem 0.85rem;
+			border-radius: 999px;
+			font-size: 12.5px;
+			font-weight: 500;
+			line-height: 1.3;
+			border: 1px solid rgba(255, 255, 255, 0.9);
+			background: rgba(255, 255, 255, 0.55);
+			color: var(--ink);
+			box-shadow: 0 1px 3px rgba(26, 35, 50, 0.04);
+		}
+
+		.hero-stat .dot {
+			width: 7px;
+			height: 7px;
+			border-radius: 50%;
+			flex-shrink: 0;
+		}
+
+		.hero-stat.smooth .dot { background: var(--smooth); box-shadow: 0 0 0 3px var(--smooth-glow); }
+		.hero-stat.duplex .dot { background: var(--duplex); box-shadow: 0 0 0 3px var(--duplex-glow); }
+		.hero-stat.neutral .dot { background: linear-gradient(135deg, var(--smooth), var(--duplex)); }
 
 		.nav-links {
 			display: inline-flex;
 			flex-wrap: wrap;
 			justify-content: center;
-			gap: 0.4rem;
-			margin-top: 1.25rem;
-			padding-top: 1.25rem;
-			border-top: 1px solid var(--line);
-			font-size: 14px;
+			gap: 0.45rem;
+			margin-top: 1.35rem;
+			padding-top: 1.35rem;
+			border-top: 1px solid rgba(220, 227, 238, 0.8);
+			font-size: 13.5px;
 		}
 
 		.nav-links a {
-			color: var(--muted);
+			color: var(--ink);
 			text-decoration: none;
-			padding: 0.35rem 0.9rem;
-			border-radius: 6px;
-			transition: background 0.15s, color 0.15s;
+			padding: 0.45rem 1rem;
+			border-radius: 999px;
+			border: 1px solid var(--line);
+			background: rgba(255, 255, 255, 0.65);
+			font-weight: 500;
+			transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.2s, box-shadow 0.2s;
 		}
 
 		.nav-links a:hover {
-			color: var(--ink);
-			background: var(--bg-center);
+			color: var(--smooth);
+			background: #fff;
+			border-color: rgba(37, 99, 235, 0.25);
+			box-shadow: 0 2px 8px var(--smooth-glow);
+			transform: translateY(-1px);
 			text-decoration: none;
 		}
 
 		.nav-links .ext {
-			color: var(--duplex);
+			color: #fff;
 			font-weight: 500;
-			background: var(--duplex-soft);
+			background: linear-gradient(135deg, var(--duplex), #10b981);
+			border-color: transparent;
 		}
 
 		.nav-links .ext:hover {
-			background: #d1fae5;
-			color: #047857;
+			background: linear-gradient(135deg, #047857, var(--duplex));
+			color: #fff;
+			border-color: transparent;
+			box-shadow: 0 2px 12px var(--duplex-glow);
+		}
+
+		.nav-links .ext.github {
+			background: linear-gradient(135deg, #1a2332, #374151);
+		}
+
+		.nav-links .ext.github:hover {
+			background: linear-gradient(135deg, #0c1220, #1a2332);
+			box-shadow: 0 2px 12px rgba(26, 35, 50, 0.2);
 		}
 
 		/* ── main ── */
@@ -357,31 +426,29 @@
 			padding: var(--page-pad) 2rem 4rem;
 		}
 
-		.abstract {
-			margin: 0 auto 2.5rem;
-			padding: 1.5rem 1.75rem;
-		}
-
-		.abstract h2 {
-			font-family: "Source Serif 4", "Noto Serif SC", serif;
-			font-size: 1rem;
-			font-weight: 600;
-			color: var(--ink);
-			margin: 0 0 0.85rem;
-			text-align: center;
-			letter-spacing: 0.04em;
-			text-transform: uppercase;
-		}
-
-		.abstract p {
+		.section-intro p {
 			margin: 0;
-			font-size: 14px;
-			line-height: 1.75;
+			font-size: 14.5px;
+			line-height: 1.8;
 			color: var(--muted);
 		}
 
-		.abstract p + p {
-			margin-top: 0.85rem;
+		.section-intro p + p {
+			margin-top: 0.9rem;
+		}
+
+		.section-intro strong {
+			color: var(--ink);
+			font-weight: 600;
+		}
+
+		.intro-card {
+			padding: 1.75rem 2rem;
+			background: linear-gradient(
+				160deg,
+				rgba(255, 255, 255, 0.78) 0%,
+				rgba(248, 250, 252, 0.65) 100%
+			);
 		}
 
 		.section {
@@ -394,11 +461,11 @@
 
 		.section-head h2 {
 			font-family: "Source Serif 4", "Noto Serif SC", serif;
-			font-size: 1.5rem;
+			font-size: 1.55rem;
 			font-weight: 600;
 			margin: 0 0 0.65rem;
 			color: var(--ink);
-			letter-spacing: -0.02em;
+			letter-spacing: -0.025em;
 		}
 
 		.section-head h2::after {
@@ -423,35 +490,81 @@
 			margin-top: 0.5rem;
 		}
 
+		.section-note {
+			display: inline-block;
+			margin-top: 0.65rem;
+			padding: 0.3rem 0.75rem;
+			border-radius: 999px;
+			font-size: 12.5px;
+			color: var(--muted);
+			background: rgba(255, 255, 255, 0.55);
+			border: 1px solid var(--line);
+		}
+
 		/* ── sample comparison ── */
 		.domain-group + .domain-group {
 			margin-top: 2.5rem;
 		}
 
 		.domain-label {
+			display: inline-flex;
+			align-items: center;
+			gap: 0.5rem;
 			font-size: 12px;
 			font-weight: 600;
-			letter-spacing: 0.08em;
+			letter-spacing: 0.07em;
 			text-transform: uppercase;
 			color: var(--ink);
-			margin-bottom: 0.85rem;
-			padding-left: 0.75rem;
-			background: linear-gradient(180deg, var(--smooth), var(--duplex)) left / 3px 100% no-repeat;
+			margin-bottom: 1rem;
+			padding: 0.4rem 0.9rem 0.4rem 0.75rem;
+			border-radius: 999px;
+			background: rgba(255, 255, 255, 0.6);
+			border: 1px solid rgba(255, 255, 255, 0.85);
+			box-shadow: 0 1px 4px rgba(26, 35, 50, 0.04);
+		}
+
+		.domain-label::before {
+			content: "";
+			width: 8px;
+			height: 8px;
+			border-radius: 50%;
+			background: linear-gradient(135deg, var(--smooth), var(--duplex));
+			box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 		}
 
 		html[lang="zh-CN"] .domain-label {
 			text-transform: none;
-			letter-spacing: 0.05em;
+			letter-spacing: 0.04em;
 		}
 
-		.compare-panel {
+		.compare-rows {
+			display: flex;
+			flex-direction: column;
+			gap: 1.5rem;
+		}
+
+		.compare-row {
 			display: grid;
 			grid-template-columns: 1fr 1fr;
 			gap: 1.25rem;
 		}
 
 		.dataset-panel {
-			padding: 1.25rem 1.25rem 1rem;
+			padding: 1.35rem 1.35rem 1.1rem;
+		}
+
+		.dataset-panel.smooth.surface-interactive:hover {
+			box-shadow: 0 6px 24px rgba(26, 35, 50, 0.07), 0 16px 40px var(--smooth-glow);
+			border-color: rgba(37, 99, 235, 0.22);
+		}
+
+		.dataset-panel.duplex.surface-interactive:hover {
+			box-shadow: 0 6px 24px rgba(26, 35, 50, 0.07), 0 16px 40px var(--duplex-glow);
+			border-color: rgba(5, 150, 105, 0.22);
+		}
+
+		.dataset-panel .panel-title {
+			margin-bottom: 0.85rem;
 		}
 
 		.panel-title {
@@ -470,11 +583,17 @@
 		}
 
 		.panel-title .badge {
-			font-size: 11px;
-			font-weight: 500;
-			padding: 2px 7px;
-			border-radius: 3px;
-			letter-spacing: .02em;
+			font-size: 10.5px;
+			font-weight: 600;
+			padding: 3px 9px;
+			border-radius: 999px;
+			letter-spacing: 0.03em;
+			text-transform: uppercase;
+		}
+
+		html[lang="zh-CN"] .panel-title .badge {
+			text-transform: none;
+			letter-spacing: 0.02em;
 		}
 
 		.dataset-panel.smooth .name { color: var(--smooth); }
@@ -489,12 +608,6 @@
 			color: var(--duplex);
 		}
 
-		.video-row {
-			display: grid;
-			grid-template-columns: repeat(2, minmax(0, 1fr));
-			gap: 1rem;
-		}
-
 		.sample-fig {
 			margin: 0;
 		}
@@ -504,15 +617,24 @@
 			width: 100%;
 			aspect-ratio: 16 / 10;
 			object-fit: contain;
-			background: #111;
-			border: 1px solid var(--line);
-			border-radius: 6px;
-			transition: transform 0.25s ease, box-shadow 0.25s ease;
+			background: linear-gradient(145deg, #0f1419 0%, #1a2332 100%);
+			border: 1px solid rgba(220, 227, 238, 0.9);
+			border-radius: var(--radius-sm);
+			transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 		}
 
 		.sample-fig:hover video {
-			transform: scale(1.015);
-			box-shadow: 0 8px 24px rgba(26, 35, 50, 0.12);
+			transform: scale(1.012);
+		}
+
+		.dataset-panel.smooth .sample-fig:hover video {
+			border-color: rgba(37, 99, 235, 0.35);
+			box-shadow: 0 8px 28px var(--smooth-glow);
+		}
+
+		.dataset-panel.duplex .sample-fig:hover video {
+			border-color: rgba(5, 150, 105, 0.35);
+			box-shadow: 0 8px 28px var(--duplex-glow);
 		}
 
 		.sample-fig figcaption {
@@ -535,14 +657,19 @@
 		}
 
 		.stat-block {
-			padding: .75rem .75rem .65rem;
+			padding: 1rem 1rem 0.85rem;
 		}
 
 		.stat-block img {
 			display: block;
 			width: 100%;
 			height: auto;
+			border-radius: var(--radius-sm);
+			border: 1px solid var(--line);
 		}
+
+		.stat-row:first-of-type .stat-block img { border-top: 2px solid var(--smooth); }
+		.stat-row + .stat-row .stat-block img { border-top: 2px solid var(--duplex); }
 
 		.stat-block figcaption {
 			margin-top: .5rem;
@@ -564,38 +691,82 @@
 			display: flex;
 			flex-wrap: wrap;
 			justify-content: center;
-			gap: .75rem 1.5rem;
-			padding: 1.5rem;
+			gap: 0.65rem 0.85rem;
+			padding: 1.65rem 1.5rem;
 			font-size: 14px;
 		}
 
 		.download-bar a {
-			font-weight: 500;
-			padding: 0.4rem 1rem;
-			border-radius: 6px;
-			background: rgba(255, 255, 255, 0.55);
-			transition: background 0.2s ease, transform 0.2s ease;
+			font-weight: 600;
+			padding: 0.55rem 1.15rem;
+			border-radius: 999px;
+			border: 1px solid transparent;
+			transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 		}
 
 		.download-bar a:hover {
-			background: rgba(255, 255, 255, 0.92);
-			transform: translateY(-1px);
+			transform: translateY(-2px);
 			text-decoration: none;
 		}
 
+		.download-bar .dl-smooth {
+			color: #fff;
+			background: linear-gradient(135deg, var(--smooth), #3b82f6);
+			box-shadow: 0 2px 10px var(--smooth-glow);
+		}
+
+		.download-bar .dl-smooth:hover {
+			background: linear-gradient(135deg, #1d4ed8, var(--smooth));
+			box-shadow: 0 4px 16px rgba(37, 99, 235, 0.25);
+		}
+
+		.download-bar .dl-duplex {
+			color: #fff;
+			background: linear-gradient(135deg, var(--duplex), #10b981);
+			box-shadow: 0 2px 10px var(--duplex-glow);
+		}
+
+		.download-bar .dl-duplex:hover {
+			background: linear-gradient(135deg, #047857, var(--duplex));
+			box-shadow: 0 4px 16px rgba(5, 150, 105, 0.25);
+		}
+
+		.download-bar .dl-secondary {
+			color: var(--ink);
+			background: rgba(255, 255, 255, 0.7);
+			border-color: var(--line);
+		}
+
+		.download-bar .dl-secondary:hover {
+			background: #fff;
+			box-shadow: 0 2px 10px rgba(26, 35, 50, 0.08);
+		}
+
 		.site-footer {
-			margin-top: 2rem;
-			padding-top: 1.5rem;
+			margin-top: 2.5rem;
+			padding: 1.75rem 1rem 0.5rem;
 			border-top: 1px solid var(--line);
 			text-align: center;
 			font-size: 13px;
 			color: var(--muted);
 		}
 
-		.site-footer p { margin: .35rem 0; }
+		.site-footer p { margin: 0.4rem 0; }
+
+		.site-footer a {
+			color: var(--muted);
+			border-bottom: 1px solid transparent;
+			transition: color 0.15s, border-color 0.15s;
+		}
+
+		.site-footer a:hover {
+			color: var(--smooth);
+			border-bottom-color: rgba(37, 99, 235, 0.35);
+			text-decoration: none;
+		}
 
 		@media (max-width: 900px) {
-			.compare-panel { grid-template-columns: 1fr; }
+			.compare-row { grid-template-columns: 1fr; }
 		}
 
 		@media (max-width: 720px) {
@@ -604,10 +775,12 @@
 			.hero-panel { padding: 1.5rem 1rem 1.15rem; }
 			.hero-title { font-size: 1rem; }
 			.lang-switch { top: 0.65rem; right: 0.65rem; }
-			.nav-links a { padding: 0.2rem 0.55rem; font-size: 13px; }
+			.nav-links a { padding: 0.35rem 0.75rem; font-size: 13px; }
+			.hero-stats { gap: 0.4rem; }
+			.hero-stat { font-size: 11.5px; padding: 0.3rem 0.65rem; }
+			.intro-card { padding: 1.25rem 1.15rem; }
 			.section-head h2 { font-size: 1.3rem; }
-			.compare-panel { gap: 1rem; }
-			.video-row { grid-template-columns: 1fr; }
+			.compare-row { gap: 1rem; }
 			.stat-row { grid-template-columns: 1fr; }
 		}
 	</style>
@@ -630,7 +803,7 @@
 			</div>
 			<div class="hero-logo">
 				<h1>
-					<img src="figs/logo.png?v=2" alt="SmoothConv &amp; DuplexConv">
+					<img src="figs/logo_1.png" alt="SmoothConv &amp; DuplexConv">
 				</h1>
 			</div>
 			<div class="hero-caption">
@@ -649,7 +822,7 @@
 						<span class="i18n-zh">数据统计</span>
 					</a>
 					<a class="ext" href="https://huggingface.co/datasets/qualialabsAI" target="_blank" rel="noopener">HuggingFace ↗</a>
-					<a class="ext" href="https://github.com/qualialabsAI/SmoothConv-DuplexConv" target="_blank" rel="noopener">GitHub ↗</a>
+					<a class="ext github" href="https://github.com/qualialabsAI/SmoothConv-DuplexConv" target="_blank" rel="noopener">GitHub ↗</a>
 				</nav>
 			</div>
 		</div>
@@ -658,14 +831,17 @@
 
 <main class="page">
 
-	<div class="abstract surface reveal">
-		<h2>
-			<span class="i18n-en">Abstract</span>
-			<span class="i18n-zh">摘要</span>
-		</h2>
-		<div class="i18n-en">
+	<section class="section reveal" id="introduction">
+		<div class="section-head">
+			<h2>
+				<span class="i18n-en">Introduction</span>
+				<span class="i18n-zh">引言</span>
+			</h2>
+		</div>
+		<div class="intro-card surface">
+		<div class="section-intro i18n-en">
 			<p>
-				Open-source Chinese speech corpora have primarily focused on single-speaker, read speech, or scripted interactions, while large-scale datasets capturing natural full-duplex conversational dynamics remain limited. In particular, publicly available resources rarely provide multi-channel recordings of spontaneous multi-party conversations with overlapping speech, backchannels, interruptions, pauses, and other interaction phenomena that are fundamental to human communication.
+				Open-source Chinese speech corpora have primarily focused on single-speaker, read speech, or scripted interactions. Large-scale datasets that capture natural full-duplex conversational dynamics remain limited. In particular, publicly available resources rarely provide multi-channel recordings of spontaneous multi-party conversations with overlapping speech, backchannels, interruptions, pauses, and other interaction phenomena fundamental to human communication.
 			</p>
 			<p>
 				To address this gap, we present <strong>SmoothConv</strong> and <strong>DuplexConv</strong>, a pair of complementary Chinese conversational speech datasets comprising a total of <strong>2,100 hours</strong> of naturally occurring multi-party interactions collected from <strong>Tutoring</strong> and <strong>Social Chat</strong> scenarios. The datasets are designed to facilitate research on full-duplex spoken dialogue, turn-taking modeling, and interruption handling.
@@ -677,15 +853,15 @@
 				<strong>DuplexConv</strong> scales the corpus to 2,000 hours through an LLM-assisted annotation pipeline, providing large-scale transcripts, turn structures, speaker information, and scene-level contextual labels.
 			</p>
 			<p>
-				Together, <strong>SmoothConv</strong> and <strong>DuplexConv</strong> establish a unified resource for studying conversational behaviors in realistic full-duplex settings, supporting research that spans fine-grained interaction modeling and robust speech understanding.
+				Together, <strong>SmoothConv</strong> and <strong>DuplexConv</strong> establish a unified resource for studying conversational behavior in realistic full-duplex settings, supporting research that spans fine-grained interaction modeling and robust speech understanding.
 			</p>
 		</div>
-		<div class="i18n-zh">
+		<div class="section-intro i18n-zh">
 			<p>
-				开源中文语音语料库先前主要面向单人朗读或脚本化交互，而能够刻画自然全双工会话动态的大规模数据集仍然有限。尤其是，公开资源中鲜有提供多通道、真实自发式多方对话录音，涵盖重叠语音、附和、打断、停顿等对人类交流至关重要的交互现象。
+				开源中文语音语料库先前主要面向单人朗读或脚本化交互，能够刻画自然全双工会话动态的大规模数据集仍然有限。尤其是，公开资源中鲜有提供多通道、真实自发式多方对话录音，涵盖重叠语音、附和、打断、停顿等对人类交流至关重要的交互现象。
 			</p>
 			<p>
-				为填补这一空白，我们发布 <strong>SmoothConv</strong> 与 <strong>DuplexConv</strong> 两个互补的中文会话语音数据集，合计 <strong>2,100 小时</strong>自然发生的多方交互，采集自<strong>教育</strong>与<strong>闲聊</strong>场景。数据集旨在支持全双工口语对话、话轮建模与打断处理等方面的研究。
+				为填补这一空白，我们发布 <strong>SmoothConv</strong> 与 <strong>DuplexConv</strong> 两个互补的中文会话语音数据集，合计 <strong>2,100 小时</strong>自然发生的多方交互，采集自<strong>教育</strong>与<strong>闲聊</strong>场景，旨在支持全双工口语对话、话轮建模与打断处理等方面的研究。
 			</p>
 			<p>
 				<strong>SmoothConv</strong> 包含 100 小时精心筛选的对话及人工精标，提供高质量转写、毫秒级时间戳、话轮边界、重叠区段、停顿信息、说话人属性及交互相关标签，可作为细粒度会话分析与监督模型训练的基准资源。
@@ -697,20 +873,21 @@
 				<strong>SmoothConv</strong> 与 <strong>DuplexConv</strong> 共同构成统一资源，用于在真实全双工场景下研究会话行为，支持从细粒度交互建模到稳健语音理解的研究。
 			</p>
 		</div>
-	</div>
+		</div>
+	</section>
 
 	<!-- samples -->
-	<section class="section reveal" id="samples">
+	<section class="section reveal reveal-delay-1" id="samples">
 		<div class="section-head">
 			<h2>
 				<span class="i18n-en">Annotation Samples</span>
 				<span class="i18n-zh">标注样例</span>
 			</h2>
 			<p>
-				<span class="i18n-en">Annotation visualizations for SmoothConv and DuplexConv in Tutoring and Social Chat.</span>
+				<span class="i18n-en">Annotation visualizations for SmoothConv and DuplexConv in Tutoring and Social Chat scenarios.</span>
 				<span class="i18n-zh">SmoothConv 与 DuplexConv 在教育与闲聊场景下的标注可视化样例。</span>
 			</p>
-			<p>
+			<p class="section-note">
 				<span class="i18n-en">For preview, each video is a 45-second clip excerpted from the full conversation.</span>
 				<span class="i18n-zh">为便于展示，以下视频均为从完整对话中截取的 45 秒片段。</span>
 			</p>
@@ -721,16 +898,16 @@
 				<span class="i18n-en">Tutoring</span>
 				<span class="i18n-zh">教育</span>
 			</div>
-			<div class="compare-panel">
-				<div class="dataset-panel surface surface-interactive smooth">
-					<div class="panel-title">
-						<span class="name">SmoothConv</span>
-						<span class="badge">
-							<span class="i18n-en">Expert Annotation</span>
-							<span class="i18n-zh">人工精标</span>
-						</span>
-					</div>
-					<div class="video-row">
+			<div class="compare-rows">
+				<div class="compare-row">
+					<div class="dataset-panel surface surface-interactive smooth">
+						<div class="panel-title">
+							<span class="name">SmoothConv</span>
+							<span class="badge">
+								<span class="i18n-en">Expert Annotation</span>
+								<span class="i18n-zh">人工精标</span>
+							</span>
+						</div>
 						<figure class="sample-fig">
 							<video controls preload="metadata" playsinline>
 								<source src="figs/Smooth_examples/example_Tutoring_01.mp4" type="video/mp4">
@@ -740,6 +917,35 @@
 								<span class="i18n-zh">样例 1</span>
 							</figcaption>
 						</figure>
+					</div>
+					<div class="dataset-panel surface surface-interactive duplex">
+						<div class="panel-title">
+							<span class="name">DuplexConv</span>
+							<span class="badge">
+								<span class="i18n-en">Auto Annotation</span>
+								<span class="i18n-zh">自动标注</span>
+							</span>
+						</div>
+						<figure class="sample-fig">
+							<video controls preload="metadata" playsinline>
+								<source src="figs/Duplex_examples/example_Tutoring_01.mp4" type="video/mp4">
+							</video>
+							<figcaption>
+								<span class="i18n-en">Sample 1</span>
+								<span class="i18n-zh">样例 1</span>
+							</figcaption>
+						</figure>
+					</div>
+				</div>
+				<div class="compare-row">
+					<div class="dataset-panel surface surface-interactive smooth">
+						<div class="panel-title">
+							<span class="name">SmoothConv</span>
+							<span class="badge">
+								<span class="i18n-en">Expert Annotation</span>
+								<span class="i18n-zh">人工精标</span>
+							</span>
+						</div>
 						<figure class="sample-fig">
 							<video controls preload="metadata" playsinline>
 								<source src="figs/Smooth_examples/example_Tutoring_02.mp4" type="video/mp4">
@@ -750,25 +956,14 @@
 							</figcaption>
 						</figure>
 					</div>
-				</div>
-				<div class="dataset-panel surface surface-interactive duplex">
-					<div class="panel-title">
-						<span class="name">DuplexConv</span>
-						<span class="badge">
-							<span class="i18n-en">Auto Annotation</span>
-							<span class="i18n-zh">自动标注</span>
-						</span>
-					</div>
-					<div class="video-row">
-						<figure class="sample-fig">
-							<video controls preload="metadata" playsinline>
-								<source src="figs/Duplex_examples/example_Tutoring_01.mp4" type="video/mp4">
-							</video>
-							<figcaption>
-								<span class="i18n-en">Sample 1</span>
-								<span class="i18n-zh">样例 1</span>
-							</figcaption>
-						</figure>
+					<div class="dataset-panel surface surface-interactive duplex">
+						<div class="panel-title">
+							<span class="name">DuplexConv</span>
+							<span class="badge">
+								<span class="i18n-en">Auto Annotation</span>
+								<span class="i18n-zh">自动标注</span>
+							</span>
+						</div>
 						<figure class="sample-fig">
 							<video controls preload="metadata" playsinline>
 								<source src="figs/Duplex_examples/example_Tutoring_02.mp4" type="video/mp4">
@@ -788,16 +983,16 @@
 				<span class="i18n-en">Social Chat</span>
 				<span class="i18n-zh">闲聊</span>
 			</div>
-			<div class="compare-panel">
-				<div class="dataset-panel surface surface-interactive smooth">
-					<div class="panel-title">
-						<span class="name">SmoothConv</span>
-						<span class="badge">
-							<span class="i18n-en">Expert Annotation</span>
-							<span class="i18n-zh">人工精标</span>
-						</span>
-					</div>
-					<div class="video-row">
+			<div class="compare-rows">
+				<div class="compare-row">
+					<div class="dataset-panel surface surface-interactive smooth">
+						<div class="panel-title">
+							<span class="name">SmoothConv</span>
+							<span class="badge">
+								<span class="i18n-en">Expert Annotation</span>
+								<span class="i18n-zh">人工精标</span>
+							</span>
+						</div>
 						<figure class="sample-fig">
 							<video controls preload="metadata" playsinline>
 								<source src="figs/Smooth_examples/example_Social_Chat_01.mp4" type="video/mp4">
@@ -807,6 +1002,35 @@
 								<span class="i18n-zh">样例 1</span>
 							</figcaption>
 						</figure>
+					</div>
+					<div class="dataset-panel surface surface-interactive duplex">
+						<div class="panel-title">
+							<span class="name">DuplexConv</span>
+							<span class="badge">
+								<span class="i18n-en">Auto Annotation</span>
+								<span class="i18n-zh">自动标注</span>
+							</span>
+						</div>
+						<figure class="sample-fig">
+							<video controls preload="metadata" playsinline>
+								<source src="figs/Duplex_examples/example_Social_Chat_01.mp4" type="video/mp4">
+							</video>
+							<figcaption>
+								<span class="i18n-en">Sample 1</span>
+								<span class="i18n-zh">样例 1</span>
+							</figcaption>
+						</figure>
+					</div>
+				</div>
+				<div class="compare-row">
+					<div class="dataset-panel surface surface-interactive smooth">
+						<div class="panel-title">
+							<span class="name">SmoothConv</span>
+							<span class="badge">
+								<span class="i18n-en">Expert Annotation</span>
+								<span class="i18n-zh">人工精标</span>
+							</span>
+						</div>
 						<figure class="sample-fig">
 							<video controls preload="metadata" playsinline>
 								<source src="figs/Smooth_examples/example_Social_Chat_02.mp4" type="video/mp4">
@@ -817,25 +1041,14 @@
 							</figcaption>
 						</figure>
 					</div>
-				</div>
-				<div class="dataset-panel surface surface-interactive duplex">
-					<div class="panel-title">
-						<span class="name">DuplexConv</span>
-						<span class="badge">
-							<span class="i18n-en">Auto Annotation</span>
-							<span class="i18n-zh">自动标注</span>
-						</span>
-					</div>
-					<div class="video-row">
-						<figure class="sample-fig">
-							<video controls preload="metadata" playsinline>
-								<source src="figs/Duplex_examples/example_Social_Chat_01.mp4" type="video/mp4">
-							</video>
-							<figcaption>
-								<span class="i18n-en">Sample 1</span>
-								<span class="i18n-zh">样例 1</span>
-							</figcaption>
-						</figure>
+					<div class="dataset-panel surface surface-interactive duplex">
+						<div class="panel-title">
+							<span class="name">DuplexConv</span>
+							<span class="badge">
+								<span class="i18n-en">Auto Annotation</span>
+								<span class="i18n-zh">自动标注</span>
+							</span>
+						</div>
 						<figure class="sample-fig">
 							<video controls preload="metadata" playsinline>
 								<source src="figs/Duplex_examples/example_Social_Chat_02.mp4" type="video/mp4">
@@ -852,7 +1065,7 @@
 	</section>
 
 	<!-- statistics -->
-	<section class="section reveal" id="statistics">
+	<section class="section reveal reveal-delay-2" id="statistics">
 		<div class="section-head">
 			<h2>
 				<span class="i18n-en">Data Distribution</span>
@@ -887,19 +1100,19 @@
 	</section>
 
 	<div class="download-bar surface reveal">
-		<a href="https://huggingface.co/datasets/qualialabsAI/SmoothConv" target="_blank" rel="noopener">
+		<a class="dl-smooth" href="https://huggingface.co/datasets/qualialabsAI/SmoothConv" target="_blank" rel="noopener">
 			<span class="i18n-en">Download SmoothConv</span>
 			<span class="i18n-zh">下载 SmoothConv</span>
 		</a>
-		<a href="https://huggingface.co/datasets/qualialabsAI/DuplexConv" target="_blank" rel="noopener">
+		<a class="dl-duplex" href="https://huggingface.co/datasets/qualialabsAI/DuplexConv" target="_blank" rel="noopener">
 			<span class="i18n-en">Download DuplexConv</span>
 			<span class="i18n-zh">下载 DuplexConv</span>
 		</a>
-		<a href="https://github.com/qualialabsAI/SmoothConv-DuplexConv" target="_blank" rel="noopener">
+		<a class="dl-secondary" href="https://github.com/qualialabsAI/SmoothConv-DuplexConv" target="_blank" rel="noopener">
 			<span class="i18n-en">GitHub Repository</span>
 			<span class="i18n-zh">GitHub 仓库</span>
 		</a>
-		<a href="https://github.com/qualialabsAI/SmoothConv-DuplexConv/blob/main/README.md">
+		<a class="dl-secondary" href="https://github.com/qualialabsAI/SmoothConv-DuplexConv/blob/main/README.md">
 			<span class="i18n-en">Documentation &amp; Citation</span>
 			<span class="i18n-zh">技术文档与引用</span>
 		</a>

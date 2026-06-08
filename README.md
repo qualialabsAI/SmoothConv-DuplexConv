@@ -1,6 +1,6 @@
 
 <p align="center">
-  <img src="figs/logo.png?v=2" alt="SmoothConv & DuplexConv" width="920">
+  <img src="figs/logo_1.png" alt="SmoothConv & DuplexConv" width="720">
 </p>
 
 # SmoothConv & DuplexConv: Large-Scale Chinese Full-Duplex Speech Datasets for Conversational AI
@@ -8,20 +8,16 @@
 <p align="center">
   <a href=""><img src="https://img.shields.io/badge/arXiv-Paper-COLOR.svg" alt="arXiv"></a>
   <a href="https://huggingface.co/datasets/qualialabsAI"><img src="https://img.shields.io/badge/%F0%9F%A4%97%20HuggingFace-Dataset-yellow" alt="HuggingFace"></a>
-  <a href="https://github.com/qualialabsAI/SmoothConv"><img src="https://img.shields.io/badge/GitHub-Repo-green" alt="GitHub"></a>
+  <a href="https://github.com/qualialabsAI/SmoothConv-DuplexConv"><img src="https://img.shields.io/badge/GitHub-Repo-green" alt="GitHub"></a>
 </p>
 
 This is the official repository for the **SmoothConv** and **DuplexConv** datasets, co-developed by **ASLP@NPU** and **QualiaLabs**.
 
-Open-source Chinese speech corpora have primarily focused on single-speaker, read speech, or scripted interactions, while large-scale datasets capturing natural full-duplex conversational dynamics remain limited. In particular, publicly available resources rarely provide multi-channel recordings of spontaneous multi-party conversations with overlapping speech, backchannels, interruptions, pauses, and other interaction phenomena that are fundamental to human communication.
+## Introduction
 
-To address this gap, we present **SmoothConv** and **DuplexConv**, a pair of complementary Chinese conversational speech datasets comprising a total of **2,100 hours** of naturally occurring multi-party interactions collected from **Tutoring** and **Social Chat** scenarios. The datasets are designed to facilitate research on full-duplex spoken dialogue, turn-taking modeling, and interruption handling.
+Open-source Chinese speech corpora remain dominated by single-speaker, read, or scripted data. **Multi-channel, spontaneous full-duplex multi-party conversation**—with overlaps, backchannels, interruptions, and pauses—is still scarce.
 
-**SmoothConv** contains 100 hours of carefully curated conversations with expert human annotations, including high-quality transcripts, millisecond-level timestamps, turn boundaries, overlap regions, pause information, speaker attributes, and interaction-related labels. It serves as a benchmark resource for fine-grained conversational analysis and supervised model training.
-
-**DuplexConv** scales the corpus to 2,000 hours through an LLM-assisted annotation pipeline, providing large-scale transcripts, turn structures, speaker information, and scene-level contextual labels.
-
-Together, **SmoothConv** and **DuplexConv** establish a unified resource for studying conversational behaviors in realistic full-duplex settings, supporting research that spans fine-grained interaction modeling and robust speech understanding.
+**SmoothConv** and **DuplexConv** address this gap with **2,100 hours** of natural Chinese multi-party dialogue in **Tutoring** and **Social Chat**. **SmoothConv** (100h) provides expert human annotations for fine-grained analysis and benchmarking; **DuplexConv** (2,000h) scales coverage via an LLM-assisted pipeline with transcripts, turn structure, and scene-level context. Together they support research on turn-taking, interruption handling, and full-duplex spoken dialogue.
 
 <p align="center">
   <strong><a href="https://qualialabsai.github.io/SmoothConv-DuplexConv">Demo Page</a></strong> — Annotation sample videos and dataset distribution charts.
@@ -59,7 +55,7 @@ A high-precision dataset for fine-tuning and benchmarking full-duplex dialogue m
 
 ### DuplexConv (~2,000 Hours — LLM-Assisted Annotation at Scale)
 
-DuplexConv draws from the **same or closely related conversation sources** as SmoothConv at much larger scale (~2,000 hours). An **automated LLM pipeline** produces transcripts, turn structure, and scene-level context labels at scale.
+DuplexConv draws from the **same or closely related conversation sources** as SmoothConv at much larger scale (~2,000 hours). An **automated LLM pipeline** produces transcripts, turn structure, and scene-level context labels.
 
 - **Large-scale coverage**: ~2,000 hours of multi-turn Chinese dialogue.
 - **Automated labels**: Dialogue content, speaker tone, emotional atmosphere, and conversational context.
@@ -120,6 +116,6 @@ If you use SmoothConv or DuplexConv in your research, please cite:
   title        = {SmoothConv and DuplexConv: Large-Scale Chinese Full-Duplex Speech Datasets for Conversational AI},
   year         = {2026},
   publisher    = {GitHub},
-  howpublished = {\url{https://github.com/qualialabsAI/SmoothConv}}
+  howpublished = {\url{https://github.com/qualialabsAI/SmoothConv-DuplexConv}}
 }
 ```
