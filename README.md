@@ -1,6 +1,6 @@
 
 <p align="center">
-  <img src="figs/logo.png" alt="SmoothConv & DuplexConv" width="920">
+  <img src="figs/logo.png?v=2" alt="SmoothConv & DuplexConv" width="920">
 </p>
 
 # SmoothConv & DuplexConv: Large-Scale Chinese Full-Duplex Speech Datasets for Conversational AI
@@ -8,12 +8,12 @@
 <p align="center">
   <a href=""><img src="https://img.shields.io/badge/arXiv-Paper-COLOR.svg" alt="arXiv"></a>
   <a href="https://huggingface.co/datasets/qualialabsAI"><img src="https://img.shields.io/badge/%F0%9F%A4%97%20HuggingFace-Dataset-yellow" alt="HuggingFace"></a>
-  <a href="https://github.com/qualialabsAI/SmoothConv-DuplexConv"><img src="https://img.shields.io/badge/GitHub-Repo-green" alt="GitHub"></a>
+  <a href="https://github.com/qualialabsAI/SmoothConv"><img src="https://img.shields.io/badge/GitHub-Repo-green" alt="GitHub"></a>
 </p>
 
 This is the official repository for the **SmoothConv** and **DuplexConv** twin datasets, co-developed by **ASLP@NPU** and **QualiaLabs**.
 
-Open-source Chinese speech resources remain dominated by single-channel, scripted, or read-aloud corpora. **Large-scale, multi-channel datasets of spontaneous full-duplex dialogue**—with turn overlaps, backchannels, pauses, and real-time interruptions—are still scarce. **SmoothConv** and **DuplexConv** address this gap with **2,100 hours** of multi-party Chinese conversations in **Tutoring** and **Social Chat**, supporting turn-taking modeling, real-time interruption handling, and Speech LLM research.
+Open-source Chinese speech resources remain dominated by single-channel or scripted speech data. **Large-scale, multi-channel datasets of spontaneous full-duplex dialogue**—with turn overlaps, backchannels, pauses, and real-time interruptions—are still scarce. **SmoothConv** and **DuplexConv** address this gap with **2,100 hours** of multi-party Chinese conversations in **Tutoring** and **Social Chat**, supporting turn-taking modeling, real-time interruption handling, and Speech LLM research.
 
 <p align="center">
   <strong><a href="https://qualialabsai.github.io/SmoothConv-DuplexConv">Demo Page</a></strong> — Annotation sample videos and dataset distribution charts.
@@ -112,6 +112,6 @@ If you use SmoothConv or DuplexConv in your research, please cite:
   title        = {SmoothConv and DuplexConv: Large-Scale Chinese Full-Duplex Speech Datasets for Conversational AI},
   year         = {2026},
   publisher    = {GitHub},
-  howpublished = {\url{https://github.com/qualialabsAI/SmoothConv-DuplexConv}}
+  howpublished = {\url{https://github.com/qualialabsAI/SmoothConv}}
 }
 ```

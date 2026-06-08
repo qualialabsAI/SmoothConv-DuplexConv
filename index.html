@@ -648,7 +648,7 @@
 						<span class="i18n-en">Statistics</span>
 						<span class="i18n-zh">数据统计</span>
 					</a>
-					<a class="ext" href="https://huggingface.co/datasets/qualialabsAI/SmoothConv" target="_blank" rel="noopener">HuggingFace ↗</a>
+					<a class="ext" href="https://huggingface.co/datasets/qualialabsAI" target="_blank" rel="noopener">HuggingFace ↗</a>
 					<a class="ext" href="https://github.com/qualialabsAI/SmoothConv-DuplexConv" target="_blank" rel="noopener">GitHub ↗</a>
 				</nav>
 			</div>
@@ -665,18 +665,18 @@
 		</h2>
 		<div class="i18n-en">
 			<p>
-				Open-source Chinese speech resources remain dominated by single-channel, scripted, or read-aloud corpora. <strong>Large-scale, multi-channel datasets of spontaneous full-duplex dialogue</strong>—with turn overlaps, backchannels, pauses, and real-time interruptions—are still scarce. We present <strong>SmoothConv</strong> and <strong>DuplexConv</strong>: <strong>2,100 hours</strong> of multi-party Chinese conversations in <strong>Tutoring</strong> and <strong>Social Chat</strong>, collected from natural multi-speaker settings for full-duplex interaction research.
+				Open-source Chinese speech resources remain dominated by single-channel or scripted speech data. <strong>Large-scale, multi-channel datasets of spontaneous full-duplex dialogue</strong>—with turn overlaps, backchannels, pauses, and real-time interruptions—are still scarce. We present <strong>SmoothConv</strong> and <strong>DuplexConv</strong>: <strong>2,100 hours</strong> of multi-party Chinese conversations in <strong>Tutoring</strong> and <strong>Social Chat</strong>, collected from natural multi-speaker settings for full-duplex interaction research.
 			</p>
 			<p>
-				The twin datasets pair <strong>precision with scale</strong>. <strong>SmoothConv</strong> (100h) offers expert human annotation on real multi-party conversations—transcripts with millisecond-level timestamps at segment and turn boundaries, turn-taking states, overlaps, pauses, acoustic events, and speaker gender/emotion—for fine-tuning and benchmarking. <strong>DuplexConv</strong> (2,000h) applies an LLM labeling pipeline to the same sources, yielding transcripts, turn structure, and scene-level context labels for Speech LLM pre-training at scale. Together they support end-to-end research on turn-taking, real-time interruption, and continuous spoken dialogue.
+				The two datasets pair <strong>precision with scale</strong>. <strong>SmoothConv</strong> (100h) offers expert human annotation on real multi-party conversations—transcripts with millisecond-level timestamps at segment and turn boundaries, turn-taking states, overlaps, pauses, acoustic events, and speaker gender/emotion—for fine-tuning and benchmarking. <strong>DuplexConv</strong> (2,000h) applies an LLM labeling pipeline to the same sources, yielding transcripts, turn structure, and scene-level context labels for Speech LLM pre-training at scale. Together they complement each other for fine-grained evaluation and large-scale pre-training of full-duplex spoken dialogue systems.
 			</p>
 		</div>
 		<div class="i18n-zh">
 			<p>
-				当前开源中文语音数据仍以单通道、朗读或脚本化对话为主，<strong>大规模、多通道、真实自发式全双工对话数据</strong>——涵盖话轮重叠、附和、停顿与实时打断——仍十分稀缺。我们发布 <strong>SmoothConv</strong> 与 <strong>DuplexConv</strong> 双子星数据集：同源采集 <strong>2,100 小时</strong>多方中文自然对话，覆盖<strong>教育</strong>与<strong>闲聊</strong>场景，面向全双工口语交互研究。
+				当前开源中文语音数据仍以单通道或脚本化对话为主，<strong>大规模、多通道、真实自发式全双工对话数据</strong>——涵盖话轮重叠、附和、停顿与实时打断——仍十分稀缺。我们发布 <strong>SmoothConv</strong> 与 <strong>DuplexConv</strong>：同源采集 <strong>2,100 小时</strong>多方中文自然对话，覆盖<strong>教育</strong>与<strong>闲聊</strong>场景，面向全双工口语交互研究。
 			</p>
 			<p>
-				双子星设计兼顾<strong>标注精度与数据规模</strong>。<strong>SmoothConv</strong>（100 小时）对真实多方对话进行人工精标，涵盖分段与话轮边界的毫秒级时间戳转写、话轮状态、重叠区段、停顿、声音事件及说话人性别/情感等标签，面向全双工模型的微调与基准评测。<strong>DuplexConv</strong>（2,000 小时）对同源对话采用大模型自动标注，提供转写、话轮结构与场景语境标签，支撑 Speech LLM 大规模预训练。二者协同覆盖从精细评测到预训练的全链路研究需求。
+				两个数据集分别侧重<strong>标注精度与数据规模</strong>。<strong>SmoothConv</strong>（100 小时）对真实多方对话进行人工精标，涵盖分段与话轮边界的毫秒级时间戳转写、话轮状态、重叠区段、停顿、声音事件及说话人性别/情感等标签，适用于全双工模型的微调与基准评测。<strong>DuplexConv</strong>（2,000 小时）对同源对话进行大模型自动标注，提供转写、话轮结构与场景语境标签，支撑 Speech LLM 大规模预训练。二者在同一语料体系下互补，分别服务于精细评测与大规模预训练。
 			</p>
 		</div>
 	</div>
@@ -850,7 +850,7 @@
 			<figure class="stat-block surface surface-interactive">
 				<img src="figs/statics/SmoothConv.png" alt="SmoothConv statistics">
 				<figcaption>
-					<span class="fig-num">Fig. 1</span>
+					<!-- <span class="fig-num">Fig. 1</span> -->
 					<span class="i18n-en">SmoothConv — domains, channels, turn states, and paralinguistic labels</span>
 					<span class="i18n-zh">SmoothConv — 领域、通道、话轮状态与副语言标签分布</span>
 				</figcaption>
@@ -860,7 +860,7 @@
 			<figure class="stat-block surface surface-interactive">
 				<img src="figs/statics/DuplexConv.png" alt="DuplexConv statistics">
 				<figcaption>
-					<span class="fig-num">Fig. 2</span>
+					<!-- <span class="fig-num">Fig. 2</span> -->
 					<span class="i18n-en">DuplexConv — domains, channels, turn states, and dialogue types</span>
 					<span class="i18n-zh">DuplexConv — 领域、通道、话轮状态与对话类型分布</span>
 				</figcaption>
