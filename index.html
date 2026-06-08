@@ -14,21 +14,25 @@
 	<style>
 		:root {
 			--bg: #e9edf4;
-			--bg-center: #f3f5f9;
+			--bg-center: #eef2f8;
 			--paper: #ffffff;
 			--ink: #1a2332;
 			--muted: #5c6778;
-			--line: #d5dbe6;
+			--line: #dce3ee;
 			--smooth: #2563eb;
 			--smooth-soft: #eff6ff;
 			--duplex: #059669;
 			--duplex-soft: #ecfdf5;
 			--dark: #0c1220;
 			--max: 1280px;
-			--shadow: 0 1px 2px rgba(26, 35, 50, 0.05), 0 8px 32px rgba(26, 35, 50, 0.06);
+			--radius: 12px;
+			--shadow: 0 1px 3px rgba(26, 35, 50, 0.04), 0 10px 36px rgba(26, 35, 50, 0.07);
+			--page-pad: 2rem;
 		}
 
 		*, *::before, *::after { box-sizing: border-box; }
+
+		html { scroll-behavior: smooth; }
 
 		body {
 			margin: 0;
@@ -38,10 +42,9 @@
 			color: var(--ink);
 			background-color: var(--bg-center);
 			background-image:
-				radial-gradient(ellipse 50% 80% at 0% 15%, rgba(37, 99, 235, 0.14) 0%, transparent 58%),
-				radial-gradient(ellipse 50% 80% at 100% 55%, rgba(5, 150, 105, 0.12) 0%, transparent 58%),
-				radial-gradient(ellipse 70% 45% at 50% -5%, rgba(255, 255, 255, 0.95) 0%, transparent 65%),
-				linear-gradient(165deg, #e4e9f2 0%, var(--bg-center) 42%, #e8ecf4 100%);
+				radial-gradient(ellipse 45% 70% at 0% 20%, rgba(37, 99, 235, 0.10) 0%, transparent 55%),
+				radial-gradient(ellipse 45% 70% at 100% 60%, rgba(5, 150, 105, 0.09) 0%, transparent 55%),
+				linear-gradient(180deg, #e8edf5 0%, var(--bg-center) 50%, #e9edf4 100%);
 			background-attachment: fixed;
 			-webkit-font-smoothing: antialiased;
 		}
@@ -52,49 +55,181 @@
 			inset: 0;
 			z-index: -1;
 			pointer-events: none;
-			background-image: radial-gradient(circle, rgba(26, 35, 50, 0.055) 1px, transparent 1px);
-			background-size: 26px 26px;
-			mask-image: linear-gradient(to right, #000 0%, transparent 18%, transparent 82%, #000 100%);
-			-webkit-mask-image: linear-gradient(to right, #000 0%, transparent 18%, transparent 82%, #000 100%);
+			background-image: radial-gradient(circle, rgba(26, 35, 50, 0.04) 1px, transparent 1px);
+			background-size: 28px 28px;
+			opacity: 0.7;
+		}
+
+		@keyframes orb-float {
+			0%, 100% { transform: translate(0, 0) scale(1); }
+			33% { transform: translate(4vw, -3vh) scale(1.06); }
+			66% { transform: translate(-3vw, 2vh) scale(0.94); }
+		}
+
+		@keyframes shimmer {
+			0% { background-position: 0% 50%; }
+			100% { background-position: 200% 50%; }
+		}
+
+		.bg-orbs {
+			position: fixed;
+			inset: 0;
+			z-index: -2;
+			overflow: hidden;
+			pointer-events: none;
+		}
+
+		.bg-orb {
+			position: absolute;
+			border-radius: 50%;
+			filter: blur(72px);
+			opacity: 0.45;
+			animation: orb-float 22s ease-in-out infinite;
+		}
+
+		.bg-orb-blue {
+			width: min(52vw, 520px);
+			height: min(52vw, 520px);
+			top: -8%;
+			left: -6%;
+			background: rgba(37, 99, 235, 0.35);
+		}
+
+		.bg-orb-green {
+			width: min(48vw, 480px);
+			height: min(48vw, 480px);
+			bottom: 8%;
+			right: -5%;
+			background: rgba(5, 150, 105, 0.28);
+			animation-delay: -11s;
+		}
+
+		.bg-orb-violet {
+			width: min(36vw, 360px);
+			height: min(36vw, 360px);
+			top: 42%;
+			left: 38%;
+			background: rgba(99, 102, 241, 0.14);
+			animation-delay: -6s;
 		}
 
 		a { color: var(--smooth); text-decoration: none; }
 		a:hover { text-decoration: underline; }
 
-		/* ── header ── */
-		.site-header {
-			position: relative;
-			background: transparent;
-			padding: 2rem 1.5rem 0;
+		.surface {
+			background: rgba(255, 255, 255, 0.68);
+			backdrop-filter: blur(14px);
+			-webkit-backdrop-filter: blur(14px);
+			border: 1px solid rgba(255, 255, 255, 0.75);
+			border-radius: var(--radius);
+			box-shadow: var(--shadow);
+			transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 		}
 
-		.site-header::after {
-			content: "";
-			position: absolute;
-			left: 0;
-			right: 0;
-			top: 0;
-			height: 280px;
-			z-index: -1;
-			pointer-events: none;
+		.surface-interactive:hover {
+			transform: translateY(-3px);
+			box-shadow: 0 6px 24px rgba(26, 35, 50, 0.08), 0 16px 48px rgba(37, 99, 235, 0.07);
+			border-color: rgba(37, 99, 235, 0.18);
+		}
+
+		.hero-panel.surface {
+			background: linear-gradient(
+				135deg,
+				rgba(255, 255, 255, 0.88) 0%,
+				rgba(239, 246, 255, 0.78) 45%,
+				rgba(236, 253, 245, 0.78) 100%
+			);
+		}
+
+		.abstract.surface {
+			background: linear-gradient(
+				160deg,
+				rgba(255, 255, 255, 0.82) 0%,
+				rgba(248, 250, 252, 0.72) 100%
+			);
+		}
+
+		.dataset-panel.smooth.surface {
+			border-top: 3px solid var(--smooth);
 			background: linear-gradient(
 				180deg,
-				rgba(37, 99, 235, 0.07) 0%,
-				rgba(5, 150, 105, 0.04) 45%,
-				transparent 100%
+				rgba(239, 246, 255, 0.55) 0%,
+				rgba(255, 255, 255, 0.7) 38%
 			);
+		}
+
+		.dataset-panel.duplex.surface {
+			border-top: 3px solid var(--duplex);
+			background: linear-gradient(
+				180deg,
+				rgba(236, 253, 245, 0.55) 0%,
+				rgba(255, 255, 255, 0.7) 38%
+			);
+		}
+
+		.stat-block.surface:first-child {
+			border-top: 3px solid var(--smooth);
+			background: linear-gradient(180deg, rgba(239, 246, 255, 0.45) 0%, rgba(255, 255, 255, 0.68) 35%);
+		}
+
+		.stat-block.surface:last-child {
+			border-top: 3px solid var(--duplex);
+			background: linear-gradient(180deg, rgba(236, 253, 245, 0.45) 0%, rgba(255, 255, 255, 0.68) 35%);
+		}
+
+		.download-bar.surface {
+			background: linear-gradient(
+				135deg,
+				rgba(239, 246, 255, 0.75) 0%,
+				rgba(255, 255, 255, 0.65) 50%,
+				rgba(236, 253, 245, 0.75) 100%
+			);
+		}
+
+		.reveal {
+			opacity: 0;
+			transform: translateY(22px);
+			transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1), transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+		}
+
+		.reveal.visible {
+			opacity: 1;
+			transform: none;
+		}
+
+		.reveal-delay-1 { transition-delay: 0.08s; }
+		.reveal-delay-2 { transition-delay: 0.16s; }
+
+		@media (prefers-reduced-motion: reduce) {
+			html { scroll-behavior: auto; }
+			.bg-orb { animation: none; }
+			.section-head h2::after { animation: none; }
+			.reveal { opacity: 1; transform: none; transition: none; }
+			.surface-interactive:hover,
+			.sample-fig:hover video,
+			.download-bar a:hover { transform: none; }
+		}
+
+		/* ── header ── */
+		.site-header {
+			padding: 1.75rem 1.5rem 0;
 		}
 
 		.header-shell {
 			max-width: var(--max);
 			margin: 0 auto;
+		}
+
+		.hero-panel {
 			position: relative;
+			padding: 2rem 2rem 1.35rem;
+			text-align: center;
 		}
 
 		.lang-switch {
 			position: absolute;
-			top: 0;
-			right: 0;
+			top: 1rem;
+			right: 1rem;
 			display: inline-flex;
 			border: 1px solid var(--line);
 			border-radius: 6px;
@@ -132,32 +267,23 @@
 		.hero-logo {
 			margin: 0;
 			padding: 0;
-			text-align: center;
 			line-height: 0;
 		}
 
 		.hero-logo h1 {
-			overflow: hidden;
-			max-width: 820px;
+			max-width: 880px;
 			margin: 0 auto;
-			aspect-ratio: 3.8 / 1;
-			display: flex;
-			align-items: center;
-			justify-content: center;
 			line-height: 0;
 		}
 
 		.hero-logo img {
 			display: block;
 			width: 100%;
-			height: 200%;
-			object-fit: cover;
-			object-position: center 46%;
+			height: auto;
 		}
 
 		.hero-caption {
-			padding: 0.75rem 0 0;
-			text-align: center;
+			padding: 1rem 0 0;
 		}
 
 		.hero-caption p {
@@ -192,47 +318,48 @@
 			display: inline-flex;
 			flex-wrap: wrap;
 			justify-content: center;
-			gap: 0.15rem 0;
+			gap: 0.4rem;
 			margin-top: 1.25rem;
-			padding-top: 1.15rem;
-			border-top: 1px solid rgba(0, 0, 0, 0.07);
+			padding-top: 1.25rem;
+			border-top: 1px solid var(--line);
 			font-size: 14px;
 		}
 
 		.nav-links a {
 			color: var(--muted);
 			text-decoration: none;
-			padding: 0.2rem 0.9rem;
+			padding: 0.35rem 0.9rem;
+			border-radius: 6px;
+			transition: background 0.15s, color 0.15s;
 		}
 
 		.nav-links a:hover {
 			color: var(--ink);
+			background: var(--bg-center);
 			text-decoration: none;
 		}
 
 		.nav-links .ext {
 			color: var(--duplex);
 			font-weight: 500;
+			background: var(--duplex-soft);
 		}
 
-		.nav-links a + a {
-			border-left: 1px solid var(--line);
+		.nav-links .ext:hover {
+			background: #d1fae5;
+			color: #047857;
 		}
 
 		/* ── main ── */
 		.page {
 			max-width: var(--max);
 			margin: 0 auto;
-			padding: 1.5rem 2rem 4rem;
+			padding: var(--page-pad) 2rem 4rem;
 		}
 
 		.abstract {
 			margin: 0 auto 2.5rem;
 			padding: 1.5rem 1.75rem;
-			background: var(--paper);
-			border: 1px solid var(--line);
-			border-radius: 10px;
-			box-shadow: var(--shadow);
 		}
 
 		.abstract h2 {
@@ -263,17 +390,27 @@
 
 		.section-head {
 			margin-bottom: 1.75rem;
-			padding-bottom: .75rem;
-			border-bottom: 1px solid var(--line);
 		}
 
 		.section-head h2 {
 			font-family: "Source Serif 4", "Noto Serif SC", serif;
 			font-size: 1.5rem;
 			font-weight: 600;
-			margin: 0 0 0.4rem;
+			margin: 0 0 0.65rem;
 			color: var(--ink);
 			letter-spacing: -0.02em;
+		}
+
+		.section-head h2::after {
+			content: "";
+			display: block;
+			width: 72px;
+			height: 3px;
+			margin-top: 0.55rem;
+			border-radius: 2px;
+			background: linear-gradient(90deg, var(--smooth), var(--duplex), var(--smooth));
+			background-size: 200% 100%;
+			animation: shimmer 5s linear infinite;
 		}
 
 		.section-head p {
@@ -298,8 +435,8 @@
 			text-transform: uppercase;
 			color: var(--ink);
 			margin-bottom: 0.85rem;
-			padding-left: 0.65rem;
-			border-left: 2px solid var(--muted);
+			padding-left: 0.75rem;
+			background: linear-gradient(180deg, var(--smooth), var(--duplex)) left / 3px 100% no-repeat;
 		}
 
 		html[lang="zh-CN"] .domain-label {
@@ -314,11 +451,7 @@
 		}
 
 		.dataset-panel {
-			background: var(--paper);
 			padding: 1.25rem 1.25rem 1rem;
-			border: 1px solid var(--line);
-			border-radius: 10px;
-			box-shadow: var(--shadow);
 		}
 
 		.panel-title {
@@ -373,6 +506,13 @@
 			object-fit: contain;
 			background: #111;
 			border: 1px solid var(--line);
+			border-radius: 6px;
+			transition: transform 0.25s ease, box-shadow 0.25s ease;
+		}
+
+		.sample-fig:hover video {
+			transform: scale(1.015);
+			box-shadow: 0 8px 24px rgba(26, 35, 50, 0.12);
 		}
 
 		.sample-fig figcaption {
@@ -395,11 +535,7 @@
 		}
 
 		.stat-block {
-			background: var(--paper);
-			border: 1px solid var(--line);
-			border-radius: 10px;
 			padding: .75rem .75rem .65rem;
-			box-shadow: var(--shadow);
 		}
 
 		.stat-block img {
@@ -430,19 +566,27 @@
 			justify-content: center;
 			gap: .75rem 1.5rem;
 			padding: 1.5rem;
-			background: var(--paper);
-			border: 1px solid var(--line);
-			border-radius: 10px;
-			box-shadow: var(--shadow);
 			font-size: 14px;
 		}
 
 		.download-bar a {
 			font-weight: 500;
+			padding: 0.4rem 1rem;
+			border-radius: 6px;
+			background: rgba(255, 255, 255, 0.55);
+			transition: background 0.2s ease, transform 0.2s ease;
+		}
+
+		.download-bar a:hover {
+			background: rgba(255, 255, 255, 0.92);
+			transform: translateY(-1px);
+			text-decoration: none;
 		}
 
 		.site-footer {
 			margin-top: 2rem;
+			padding-top: 1.5rem;
+			border-top: 1px solid var(--line);
 			text-align: center;
 			font-size: 13px;
 			color: var(--muted);
@@ -457,9 +601,9 @@
 		@media (max-width: 720px) {
 			.site-header { padding: 1.25rem 1rem 0; }
 			.page { padding: 1.25rem 1rem 3rem; }
-			.hero-logo img { max-width: 100%; }
+			.hero-panel { padding: 1.5rem 1rem 1.15rem; }
 			.hero-title { font-size: 1rem; }
-			.lang-switch { top: -0.25rem; right: 0; }
+			.lang-switch { top: 0.65rem; right: 0.65rem; }
 			.nav-links a { padding: 0.2rem 0.55rem; font-size: 13px; }
 			.section-head h2 { font-size: 1.3rem; }
 			.compare-panel { gap: 1rem; }
@@ -471,42 +615,50 @@
 
 <body>
 
+<div class="bg-orbs" aria-hidden="true">
+	<div class="bg-orb bg-orb-blue"></div>
+	<div class="bg-orb bg-orb-green"></div>
+	<div class="bg-orb bg-orb-violet"></div>
+</div>
+
 <header class="site-header">
 	<div class="header-shell">
-		<div class="lang-switch" role="group" aria-label="Language">
-			<button type="button" id="lang-zh" data-lang="zh-CN">中文</button>
-			<button type="button" id="lang-en" data-lang="en">EN</button>
-		</div>
-		<div class="hero-logo">
-			<h1>
-				<img src="figs/logo.png" alt="SmoothConv &amp; DuplexConv">
-			</h1>
-		</div>
-		<div class="hero-caption">
-			<p class="hero-title">
-				<span class="i18n-en">Large-Scale Chinese Full-Duplex Speech Datasets for Conversational AI</span>
-				<span class="i18n-zh">面向会话式 AI 的大规模中文全双工语音数据集</span>
-			</p>
-			<p class="hero-org">ASLP@NPU · QualiaLabs</p>
-			<nav class="nav-links">
-				<a href="#samples">
-					<span class="i18n-en">Samples</span>
-					<span class="i18n-zh">标注样例</span>
-				</a>
-				<a href="#statistics">
-					<span class="i18n-en">Statistics</span>
-					<span class="i18n-zh">数据统计</span>
-				</a>
-				<a class="ext" href="https://huggingface.co/datasets/qualialabsAI/SmoothConv" target="_blank" rel="noopener">HuggingFace ↗</a>
-				<a class="ext" href="https://github.com/qualialabsAI/SmoothConv" target="_blank" rel="noopener">GitHub ↗</a>
-			</nav>
+		<div class="hero-panel surface reveal visible">
+			<div class="lang-switch" role="group" aria-label="Language">
+				<button type="button" id="lang-zh" data-lang="zh-CN">中文</button>
+				<button type="button" id="lang-en" data-lang="en">EN</button>
+			</div>
+			<div class="hero-logo">
+				<h1>
+					<img src="figs/logo.png" alt="SmoothConv &amp; DuplexConv">
+				</h1>
+			</div>
+			<div class="hero-caption">
+				<p class="hero-title">
+					<span class="i18n-en">Large-Scale Chinese Full-Duplex Speech Datasets for Conversational AI</span>
+					<span class="i18n-zh">面向会话式 AI 的大规模中文全双工语音数据集</span>
+				</p>
+				<p class="hero-org">ASLP@NPU · QualiaLabs</p>
+				<nav class="nav-links">
+					<a href="#samples">
+						<span class="i18n-en">Samples</span>
+						<span class="i18n-zh">标注样例</span>
+					</a>
+					<a href="#statistics">
+						<span class="i18n-en">Statistics</span>
+						<span class="i18n-zh">数据统计</span>
+					</a>
+					<a class="ext" href="https://huggingface.co/datasets/qualialabsAI/SmoothConv" target="_blank" rel="noopener">HuggingFace ↗</a>
+					<a class="ext" href="https://github.com/qualialabsAI/SmoothConv-DuplexConv" target="_blank" rel="noopener">GitHub ↗</a>
+				</nav>
+			</div>
 		</div>
 	</div>
 </header>
 
 <main class="page">
 
-	<div class="abstract">
+	<div class="abstract surface reveal">
 		<h2>
 			<span class="i18n-en">Abstract</span>
 			<span class="i18n-zh">摘要</span>
@@ -530,7 +682,7 @@
 	</div>
 
 	<!-- samples -->
-	<section class="section" id="samples">
+	<section class="section reveal" id="samples">
 		<div class="section-head">
 			<h2>
 				<span class="i18n-en">Annotation Samples</span>
@@ -552,7 +704,7 @@
 				<span class="i18n-zh">教育</span>
 			</div>
 			<div class="compare-panel">
-				<div class="dataset-panel smooth">
+				<div class="dataset-panel surface surface-interactive smooth">
 					<div class="panel-title">
 						<span class="name">SmoothConv</span>
 						<span class="badge">
@@ -581,7 +733,7 @@
 						</figure>
 					</div>
 				</div>
-				<div class="dataset-panel duplex">
+				<div class="dataset-panel surface surface-interactive duplex">
 					<div class="panel-title">
 						<span class="name">DuplexConv</span>
 						<span class="badge">
@@ -619,7 +771,7 @@
 				<span class="i18n-zh">闲聊</span>
 			</div>
 			<div class="compare-panel">
-				<div class="dataset-panel smooth">
+				<div class="dataset-panel surface surface-interactive smooth">
 					<div class="panel-title">
 						<span class="name">SmoothConv</span>
 						<span class="badge">
@@ -648,7 +800,7 @@
 						</figure>
 					</div>
 				</div>
-				<div class="dataset-panel duplex">
+				<div class="dataset-panel surface surface-interactive duplex">
 					<div class="panel-title">
 						<span class="name">DuplexConv</span>
 						<span class="badge">
@@ -682,7 +834,7 @@
 	</section>
 
 	<!-- statistics -->
-	<section class="section" id="statistics">
+	<section class="section reveal" id="statistics">
 		<div class="section-head">
 			<h2>
 				<span class="i18n-en">Data Distribution</span>
@@ -695,7 +847,7 @@
 		</div>
 
 		<div class="stat-row single">
-			<figure class="stat-block">
+			<figure class="stat-block surface surface-interactive">
 				<img src="figs/statics/SmoothConv.png" alt="SmoothConv statistics">
 				<figcaption>
 					<span class="fig-num">Fig. 1</span>
@@ -705,7 +857,7 @@
 			</figure>
 		</div>
 		<div class="stat-row single">
-			<figure class="stat-block">
+			<figure class="stat-block surface surface-interactive">
 				<img src="figs/statics/DuplexConv.png" alt="DuplexConv statistics">
 				<figcaption>
 					<span class="fig-num">Fig. 2</span>
@@ -716,7 +868,7 @@
 		</div>
 	</section>
 
-	<div class="download-bar">
+	<div class="download-bar surface reveal">
 		<a href="https://huggingface.co/datasets/qualialabsAI/SmoothConv" target="_blank" rel="noopener">
 			<span class="i18n-en">Download SmoothConv</span>
 			<span class="i18n-zh">下载 SmoothConv</span>
@@ -725,11 +877,11 @@
 			<span class="i18n-en">Download DuplexConv</span>
 			<span class="i18n-zh">下载 DuplexConv</span>
 		</a>
-		<a href="https://github.com/qualialabsAI/SmoothConv" target="_blank" rel="noopener">
+		<a href="https://github.com/qualialabsAI/SmoothConv-DuplexConv" target="_blank" rel="noopener">
 			<span class="i18n-en">GitHub Repository</span>
 			<span class="i18n-zh">GitHub 仓库</span>
 		</a>
-		<a href="https://github.com/qualialabsAI/SmoothConv/blob/main/README.md">
+		<a href="https://github.com/qualialabsAI/SmoothConv-DuplexConv/blob/main/README.md">
 			<span class="i18n-en">Documentation &amp; Citation</span>
 			<span class="i18n-zh">技术文档与引用</span>
 		</a>
@@ -765,6 +917,23 @@
 	var saved = localStorage.getItem(STORAGE_KEY);
 	var initial = saved || (navigator.language && navigator.language.toLowerCase().indexOf('zh') === 0 ? 'zh-CN' : 'en');
 	setLang(initial);
+
+	if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+		var reveals = document.querySelectorAll('.reveal:not(.visible)');
+		var observer = new IntersectionObserver(function (entries) {
+			entries.forEach(function (entry) {
+				if (entry.isIntersecting) {
+					entry.target.classList.add('visible');
+					observer.unobserve(entry.target);
+				}
+			});
+		}, { threshold: 0.1, rootMargin: '0px 0px -32px 0px' });
+		reveals.forEach(function (el) { observer.observe(el); });
+	} else {
+		document.querySelectorAll('.reveal').forEach(function (el) {
+			el.classList.add('visible');
+		});
+	}
 })();
 </script>
 </body>
