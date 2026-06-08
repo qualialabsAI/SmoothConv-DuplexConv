@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Large-Scale Chinese Full-Duplex Speech Datasets for Conversational AI — SmoothConv & DuplexConv demo: annotation samples and dataset statistics.">
+	<meta property="og:image" content="figs/SD.png">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="css/normalize.css">
+	<title>SmoothConv & DuplexConv: Large-Scale Chinese Full-Duplex Speech Datasets for Conversational AI</title>
+	<style>
+		:root {
+			--bg: #e9edf4;
+			--bg-center: #f3f5f9;
+			--paper: #ffffff;
+			--ink: #1a2332;
+			--muted: #5c6778;
+			--line: #d5dbe6;
+			--smooth: #2563eb;
+			--smooth-soft: #eff6ff;
+			--duplex: #059669;
+			--duplex-soft: #ecfdf5;
+			--dark: #0c1220;
+			--max: 1280px;
+			--shadow: 0 1px 2px rgba(26, 35, 50, 0.05), 0 8px 32px rgba(26, 35, 50, 0.06);
+		}
+
+		*, *::before, *::after { box-sizing: border-box; }
+
+		body {
+			margin: 0;
+			font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+			font-size: 15px;
+			line-height: 1.75;
+			color: var(--ink);
+			background-color: var(--bg-center);
+			background-image:
+				radial-gradient(ellipse 50% 80% at 0% 15%, rgba(37, 99, 235, 0.14) 0%, transparent 58%),
+				radial-gradient(ellipse 50% 80% at 100% 55%, rgba(5, 150, 105, 0.12) 0%, transparent 58%),
+				radial-gradient(ellipse 70% 45% at 50% -5%, rgba(255, 255, 255, 0.95) 0%, transparent 65%),
+				linear-gradient(165deg, #e4e9f2 0%, var(--bg-center) 42%, #e8ecf4 100%);
+			background-attachment: fixed;
+			-webkit-font-smoothing: antialiased;
+		}
+
+		body::before {
+			content: "";
+			position: fixed;
+			inset: 0;
+			z-index: -1;
+			pointer-events: none;
+			background-image: radial-gradient(circle, rgba(26, 35, 50, 0.055) 1px, transparent 1px);
+			background-size: 26px 26px;
+			mask-image: linear-gradient(to right, #000 0%, transparent 18%, transparent 82%, #000 100%);
+			-webkit-mask-image: linear-gradient(to right, #000 0%, transparent 18%, transparent 82%, #000 100%);
+		}
+
+		a { color: var(--smooth); text-decoration: none; }
+		a:hover { text-decoration: underline; }
+
+		/* ── header ── */
+		.site-header {
+			position: relative;
+			background: transparent;
+			padding: 2rem 1.5rem 0;
+		}
+
+		.site-header::after {
+			content: "";
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 0;
+			height: 280px;
+			z-index: -1;
+			pointer-events: none;
+			background: linear-gradient(
+				180deg,
+				rgba(37, 99, 235, 0.07) 0%,
+				rgba(5, 150, 105, 0.04) 45%,
+				transparent 100%
+			);
+		}
+
+		.header-shell {
+			max-width: var(--max);
+			margin: 0 auto;
+			position: relative;
+		}
+
+		.lang-switch {
+			position: absolute;
+			top: 0;
+			right: 0;
+			display: inline-flex;
+			border: 1px solid var(--line);
+			border-radius: 6px;
+			overflow: hidden;
+			background: var(--paper);
+			font-size: 13px;
+			line-height: 1;
+		}
+
+		.lang-switch button {
+			margin: 0;
+			padding: 0.45rem 0.7rem;
+			border: none;
+			background: transparent;
+			color: var(--muted);
+			cursor: pointer;
+			font-family: inherit;
+			font-size: inherit;
+		}
+
+		.lang-switch button:hover {
+			color: var(--ink);
+		}
+
+		.lang-switch button.active {
+			background: var(--ink);
+			color: #fff;
+		}
+
+		html[lang="zh-CN"] .i18n-en,
+		html[lang="en"] .i18n-zh {
+			display: none !important;
+		}
+
+		.hero-logo {
+			margin: 0;
+			padding: 0;
+			text-align: center;
+			line-height: 0;
+		}
+
+		.hero-logo h1 {
+			overflow: hidden;
+			max-width: 820px;
+			margin: 0 auto;
+			aspect-ratio: 3.8 / 1;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			line-height: 0;
+		}
+
+		.hero-logo img {
+			display: block;
+			width: 100%;
+			height: 200%;
+			object-fit: cover;
+			object-position: center 46%;
+		}
+
+		.hero-caption {
+			padding: 0.75rem 0 0;
+			text-align: center;
+		}
+
+		.hero-caption p {
+			margin: 0;
+			line-height: 1.6;
+		}
+
+		.hero-title {
+			font-family: "Source Serif 4", "Noto Serif SC", serif;
+			font-size: 1.1rem;
+			font-weight: 500;
+			color: var(--muted);
+			letter-spacing: -0.01em;
+			margin: 0;
+			line-height: 1.45;
+		}
+
+		.hero-sub {
+			margin-top: 0.35rem;
+			font-size: 0.9375rem;
+			color: #8b95a5;
+		}
+
+		.hero-org {
+			margin-top: 0.75rem;
+			font-size: 0.875rem;
+			color: #8b95a5;
+			letter-spacing: 0.02em;
+		}
+
+		.nav-links {
+			display: inline-flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			gap: 0.15rem 0;
+			margin-top: 1.25rem;
+			padding-top: 1.15rem;
+			border-top: 1px solid rgba(0, 0, 0, 0.07);
+			font-size: 14px;
+		}
+
+		.nav-links a {
+			color: var(--muted);
+			text-decoration: none;
+			padding: 0.2rem 0.9rem;
+		}
+
+		.nav-links a:hover {
+			color: var(--ink);
+			text-decoration: none;
+		}
+
+		.nav-links .ext {
+			color: var(--duplex);
+			font-weight: 500;
+		}
+
+		.nav-links a + a {
+			border-left: 1px solid var(--line);
+		}
+
+		/* ── main ── */
+		.page {
+			max-width: var(--max);
+			margin: 0 auto;
+			padding: 1.5rem 2rem 4rem;
+		}
+
+		.abstract {
+			margin: 0 auto 2.5rem;
+			padding: 1.5rem 1.75rem;
+			background: var(--paper);
+			border: 1px solid var(--line);
+			border-radius: 10px;
+			box-shadow: var(--shadow);
+		}
+
+		.abstract h2 {
+			font-family: "Source Serif 4", "Noto Serif SC", serif;
+			font-size: 1rem;
+			font-weight: 600;
+			color: var(--ink);
+			margin: 0 0 0.85rem;
+			text-align: center;
+			letter-spacing: 0.04em;
+			text-transform: uppercase;
+		}
+
+		.abstract p {
+			margin: 0;
+			font-size: 14px;
+			line-height: 1.75;
+			color: var(--muted);
+		}
+
+		.abstract p + p {
+			margin-top: 0.85rem;
+		}
+
+		.section {
+			margin-bottom: 3.5rem;
+		}
+
+		.section-head {
+			margin-bottom: 1.75rem;
+			padding-bottom: .75rem;
+			border-bottom: 1px solid var(--line);
+		}
+
+		.section-head h2 {
+			font-family: "Source Serif 4", "Noto Serif SC", serif;
+			font-size: 1.5rem;
+			font-weight: 600;
+			margin: 0 0 0.4rem;
+			color: var(--ink);
+			letter-spacing: -0.02em;
+		}
+
+		.section-head p {
+			margin: 0;
+			font-size: 14px;
+			color: var(--muted);
+		}
+
+		.section-head p + p {
+			margin-top: 0.5rem;
+		}
+
+		/* ── sample comparison ── */
+		.domain-group + .domain-group {
+			margin-top: 2.5rem;
+		}
+
+		.domain-label {
+			font-size: 12px;
+			font-weight: 600;
+			letter-spacing: 0.08em;
+			text-transform: uppercase;
+			color: var(--ink);
+			margin-bottom: 0.85rem;
+			padding-left: 0.65rem;
+			border-left: 2px solid var(--muted);
+		}
+
+		html[lang="zh-CN"] .domain-label {
+			text-transform: none;
+			letter-spacing: 0.05em;
+		}
+
+		.compare-panel {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 1.25rem;
+		}
+
+		.dataset-panel {
+			background: var(--paper);
+			padding: 1.25rem 1.25rem 1rem;
+			border: 1px solid var(--line);
+			border-radius: 10px;
+			box-shadow: var(--shadow);
+		}
+
+		.panel-title {
+			display: flex;
+			align-items: baseline;
+			gap: .5rem;
+			margin-bottom: 1rem;
+			padding-bottom: .65rem;
+			border-bottom: 1px solid var(--line);
+		}
+
+		.panel-title .name {
+			font-family: "Source Serif 4", serif;
+			font-size: 1.125rem;
+			font-weight: 600;
+		}
+
+		.panel-title .badge {
+			font-size: 11px;
+			font-weight: 500;
+			padding: 2px 7px;
+			border-radius: 3px;
+			letter-spacing: .02em;
+		}
+
+		.dataset-panel.smooth .name { color: var(--smooth); }
+		.dataset-panel.smooth .badge {
+			background: var(--smooth-soft);
+			color: var(--smooth);
+		}
+
+		.dataset-panel.duplex .name { color: var(--duplex); }
+		.dataset-panel.duplex .badge {
+			background: var(--duplex-soft);
+			color: var(--duplex);
+		}
+
+		.video-row {
+			display: grid;
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			gap: 1rem;
+		}
+
+		.sample-fig {
+			margin: 0;
+		}
+
+		.sample-fig video {
+			display: block;
+			width: 100%;
+			aspect-ratio: 16 / 10;
+			object-fit: contain;
+			background: #111;
+			border: 1px solid var(--line);
+		}
+
+		.sample-fig figcaption {
+			margin-top: .4rem;
+			font-size: 12px;
+			color: var(--muted);
+			text-align: center;
+		}
+
+		/* ── statistics ── */
+		.stat-row {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 1.25rem;
+			margin-bottom: 1.25rem;
+		}
+
+		.stat-row.single {
+			grid-template-columns: 1fr;
+		}
+
+		.stat-block {
+			background: var(--paper);
+			border: 1px solid var(--line);
+			border-radius: 10px;
+			padding: .75rem .75rem .65rem;
+			box-shadow: var(--shadow);
+		}
+
+		.stat-block img {
+			display: block;
+			width: 100%;
+			height: auto;
+		}
+
+		.stat-block figcaption {
+			margin-top: .5rem;
+			padding: 0 .25rem;
+			font-size: 12px;
+			color: var(--muted);
+			line-height: 1.5;
+			text-align: center;
+		}
+
+		.stat-block .fig-num {
+			font-weight: 600;
+			color: var(--ink);
+			margin-right: .35rem;
+		}
+
+		/* ── footer ── */
+		.download-bar {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			gap: .75rem 1.5rem;
+			padding: 1.5rem;
+			background: var(--paper);
+			border: 1px solid var(--line);
+			border-radius: 10px;
+			box-shadow: var(--shadow);
+			font-size: 14px;
+		}
+
+		.download-bar a {
+			font-weight: 500;
+		}
+
+		.site-footer {
+			margin-top: 2rem;
+			text-align: center;
+			font-size: 13px;
+			color: var(--muted);
+		}
+
+		.site-footer p { margin: .35rem 0; }
+
+		@media (max-width: 900px) {
+			.compare-panel { grid-template-columns: 1fr; }
+		}
+
+		@media (max-width: 720px) {
+			.site-header { padding: 1.25rem 1rem 0; }
+			.page { padding: 1.25rem 1rem 3rem; }
+			.hero-logo img { max-width: 100%; }
+			.hero-title { font-size: 1rem; }
+			.lang-switch { top: -0.25rem; right: 0; }
+			.nav-links a { padding: 0.2rem 0.55rem; font-size: 13px; }
+			.section-head h2 { font-size: 1.3rem; }
+			.compare-panel { gap: 1rem; }
+			.video-row { grid-template-columns: 1fr; }
+			.stat-row { grid-template-columns: 1fr; }
+		}
+	</style>
+</head>
+
+<body>
+
+<header class="site-header">
+	<div class="header-shell">
+		<div class="lang-switch" role="group" aria-label="Language">
+			<button type="button" id="lang-zh" data-lang="zh-CN">中文</button>
+			<button type="button" id="lang-en" data-lang="en">EN</button>
+		</div>
+		<div class="hero-logo">
+			<h1>
+				<img src="figs/logo.png" alt="SmoothConv &amp; DuplexConv">
+			</h1>
+		</div>
+		<div class="hero-caption">
+			<p class="hero-title">
+				<span class="i18n-en">Large-Scale Chinese Full-Duplex Speech Datasets for Conversational AI</span>
+				<span class="i18n-zh">面向会话式 AI 的大规模中文全双工语音数据集</span>
+			</p>
+			<p class="hero-org">ASLP@NPU · QualiaLabs</p>
+			<nav class="nav-links">
+				<a href="#samples">
+					<span class="i18n-en">Samples</span>
+					<span class="i18n-zh">标注样例</span>
+				</a>
+				<a href="#statistics">
+					<span class="i18n-en">Statistics</span>
+					<span class="i18n-zh">数据统计</span>
+				</a>
+				<a class="ext" href="https://huggingface.co/datasets/qualialabsAI/SmoothConv" target="_blank" rel="noopener">HuggingFace ↗</a>
+				<a class="ext" href="https://github.com/qualialabsAI/SmoothConv" target="_blank" rel="noopener">GitHub ↗</a>
+			</nav>
+		</div>
+	</div>
+</header>
+
+<main class="page">
+
+	<div class="abstract">
+		<h2>
+			<span class="i18n-en">Abstract</span>
+			<span class="i18n-zh">摘要</span>
+		</h2>
+		<div class="i18n-en">
+			<p>
+				Open-source Chinese speech resources remain dominated by single-channel, scripted, or read-aloud corpora. <strong>Large-scale, multi-channel datasets of spontaneous full-duplex dialogue</strong>—with turn overlaps, backchannels, pauses, and real-time interruptions—are still scarce. We present <strong>SmoothConv</strong> and <strong>DuplexConv</strong>: <strong>2,100 hours</strong> of multi-party Chinese conversations in <strong>Tutoring</strong> and <strong>Social Chat</strong>, collected from natural multi-speaker settings for full-duplex interaction research.
+			</p>
+			<p>
+				The twin datasets pair <strong>precision with scale</strong>. <strong>SmoothConv</strong> (100h) offers expert human annotation on real multi-party conversations—transcripts with millisecond-level timestamps at segment and turn boundaries, turn-taking states, overlaps, pauses, acoustic events, and speaker gender/emotion—for fine-tuning and benchmarking. <strong>DuplexConv</strong> (2,000h) applies an LLM labeling pipeline to the same sources, yielding transcripts, turn structure, and scene-level context labels for Speech LLM pre-training at scale. Together they support end-to-end research on turn-taking, real-time interruption, and continuous spoken dialogue.
+			</p>
+		</div>
+		<div class="i18n-zh">
+			<p>
+				当前开源中文语音数据仍以单通道、朗读或脚本化对话为主，<strong>大规模、多通道、真实自发式全双工对话数据</strong>——涵盖话轮重叠、附和、停顿与实时打断——仍十分稀缺。我们发布 <strong>SmoothConv</strong> 与 <strong>DuplexConv</strong> 双子星数据集：同源采集 <strong>2,100 小时</strong>多方中文自然对话，覆盖<strong>教育</strong>与<strong>闲聊</strong>场景，面向全双工口语交互研究。
+			</p>
+			<p>
+				双子星设计兼顾<strong>标注精度与数据规模</strong>。<strong>SmoothConv</strong>（100 小时）对真实多方对话进行人工精标，涵盖分段与话轮边界的毫秒级时间戳转写、话轮状态、重叠区段、停顿、声音事件及说话人性别/情感等标签，面向全双工模型的微调与基准评测。<strong>DuplexConv</strong>（2,000 小时）对同源对话采用大模型自动标注，提供转写、话轮结构与场景语境标签，支撑 Speech LLM 大规模预训练。二者协同覆盖从精细评测到预训练的全链路研究需求。
+			</p>
+		</div>
+	</div>
+
+	<!-- samples -->
+	<section class="section" id="samples">
+		<div class="section-head">
+			<h2>
+				<span class="i18n-en">Annotation Samples</span>
+				<span class="i18n-zh">标注样例</span>
+			</h2>
+			<p>
+				<span class="i18n-en">Annotation visualizations for SmoothConv and DuplexConv in Tutoring and Social Chat.</span>
+				<span class="i18n-zh">SmoothConv 与 DuplexConv 在教育与闲聊场景下的标注可视化样例。</span>
+			</p>
+			<p>
+				<span class="i18n-en">For preview, each video is a 45-second clip excerpted from the full conversation.</span>
+				<span class="i18n-zh">为便于展示，以下视频均为从完整对话中截取的 45 秒片段。</span>
+			</p>
+		</div>
+
+		<div class="domain-group">
+			<div class="domain-label">
+				<span class="i18n-en">Tutoring</span>
+				<span class="i18n-zh">教育</span>
+			</div>
+			<div class="compare-panel">
+				<div class="dataset-panel smooth">
+					<div class="panel-title">
+						<span class="name">SmoothConv</span>
+						<span class="badge">
+							<span class="i18n-en">Expert Annotation</span>
+							<span class="i18n-zh">人工精标</span>
+						</span>
+					</div>
+					<div class="video-row">
+						<figure class="sample-fig">
+							<video controls preload="metadata" playsinline>
+								<source src="figs/Smooth_examples/example_Tutoring_01.mp4" type="video/mp4">
+							</video>
+							<figcaption>
+								<span class="i18n-en">Sample 1</span>
+								<span class="i18n-zh">样例 1</span>
+							</figcaption>
+						</figure>
+						<figure class="sample-fig">
+							<video controls preload="metadata" playsinline>
+								<source src="figs/Smooth_examples/example_Tutoring_02.mp4" type="video/mp4">
+							</video>
+							<figcaption>
+								<span class="i18n-en">Sample 2</span>
+								<span class="i18n-zh">样例 2</span>
+							</figcaption>
+						</figure>
+					</div>
+				</div>
+				<div class="dataset-panel duplex">
+					<div class="panel-title">
+						<span class="name">DuplexConv</span>
+						<span class="badge">
+							<span class="i18n-en">Auto Annotation</span>
+							<span class="i18n-zh">自动标注</span>
+						</span>
+					</div>
+					<div class="video-row">
+						<figure class="sample-fig">
+							<video controls preload="metadata" playsinline>
+								<source src="figs/Duplex_examples/example_Tutoring_01.mp4" type="video/mp4">
+							</video>
+							<figcaption>
+								<span class="i18n-en">Sample 1</span>
+								<span class="i18n-zh">样例 1</span>
+							</figcaption>
+						</figure>
+						<figure class="sample-fig">
+							<video controls preload="metadata" playsinline>
+								<source src="figs/Duplex_examples/example_Tutoring_02.mp4" type="video/mp4">
+							</video>
+							<figcaption>
+								<span class="i18n-en">Sample 2</span>
+								<span class="i18n-zh">样例 2</span>
+							</figcaption>
+						</figure>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="domain-group">
+			<div class="domain-label">
+				<span class="i18n-en">Social Chat</span>
+				<span class="i18n-zh">闲聊</span>
+			</div>
+			<div class="compare-panel">
+				<div class="dataset-panel smooth">
+					<div class="panel-title">
+						<span class="name">SmoothConv</span>
+						<span class="badge">
+							<span class="i18n-en">Expert Annotation</span>
+							<span class="i18n-zh">人工精标</span>
+						</span>
+					</div>
+					<div class="video-row">
+						<figure class="sample-fig">
+							<video controls preload="metadata" playsinline>
+								<source src="figs/Smooth_examples/example_Social_Chat_01.mp4" type="video/mp4">
+							</video>
+							<figcaption>
+								<span class="i18n-en">Sample 1</span>
+								<span class="i18n-zh">样例 1</span>
+							</figcaption>
+						</figure>
+						<figure class="sample-fig">
+							<video controls preload="metadata" playsinline>
+								<source src="figs/Smooth_examples/example_Social_Chat_02.mp4" type="video/mp4">
+							</video>
+							<figcaption>
+								<span class="i18n-en">Sample 2</span>
+								<span class="i18n-zh">样例 2</span>
+							</figcaption>
+						</figure>
+					</div>
+				</div>
+				<div class="dataset-panel duplex">
+					<div class="panel-title">
+						<span class="name">DuplexConv</span>
+						<span class="badge">
+							<span class="i18n-en">Auto Annotation</span>
+							<span class="i18n-zh">自动标注</span>
+						</span>
+					</div>
+					<div class="video-row">
+						<figure class="sample-fig">
+							<video controls preload="metadata" playsinline>
+								<source src="figs/Duplex_examples/example_Social_Chat_01.mp4" type="video/mp4">
+							</video>
+							<figcaption>
+								<span class="i18n-en">Sample 1</span>
+								<span class="i18n-zh">样例 1</span>
+							</figcaption>
+						</figure>
+						<figure class="sample-fig">
+							<video controls preload="metadata" playsinline>
+								<source src="figs/Duplex_examples/example_Social_Chat_02.mp4" type="video/mp4">
+							</video>
+							<figcaption>
+								<span class="i18n-en">Sample 2</span>
+								<span class="i18n-zh">样例 2</span>
+							</figcaption>
+						</figure>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- statistics -->
+	<section class="section" id="statistics">
+		<div class="section-head">
+			<h2>
+				<span class="i18n-en">Data Distribution</span>
+				<span class="i18n-zh">数据分布</span>
+			</h2>
+			<p>
+				<span class="i18n-en">Overview of the open-source SmoothConv and DuplexConv data composition.</span>
+				<span class="i18n-zh">SmoothConv 与 DuplexConv 开源版本的数据构成概览。</span>
+			</p>
+		</div>
+
+		<div class="stat-row single">
+			<figure class="stat-block">
+				<img src="figs/statics/SmoothConv.png" alt="SmoothConv statistics">
+				<figcaption>
+					<span class="fig-num">Fig. 1</span>
+					<span class="i18n-en">SmoothConv — domains, channels, turn states, and paralinguistic labels</span>
+					<span class="i18n-zh">SmoothConv — 领域、通道、话轮状态与副语言标签分布</span>
+				</figcaption>
+			</figure>
+		</div>
+		<div class="stat-row single">
+			<figure class="stat-block">
+				<img src="figs/statics/DuplexConv.png" alt="DuplexConv statistics">
+				<figcaption>
+					<span class="fig-num">Fig. 2</span>
+					<span class="i18n-en">DuplexConv — domains, channels, turn states, and dialogue types</span>
+					<span class="i18n-zh">DuplexConv — 领域、通道、话轮状态与对话类型分布</span>
+				</figcaption>
+			</figure>
+		</div>
+	</section>
+
+	<div class="download-bar">
+		<a href="https://huggingface.co/datasets/qualialabsAI/SmoothConv" target="_blank" rel="noopener">
+			<span class="i18n-en">Download SmoothConv</span>
+			<span class="i18n-zh">下载 SmoothConv</span>
+		</a>
+		<a href="https://huggingface.co/datasets/qualialabsAI/DuplexConv" target="_blank" rel="noopener">
+			<span class="i18n-en">Download DuplexConv</span>
+			<span class="i18n-zh">下载 DuplexConv</span>
+		</a>
+		<a href="https://github.com/qualialabsAI/SmoothConv" target="_blank" rel="noopener">
+			<span class="i18n-en">GitHub Repository</span>
+			<span class="i18n-zh">GitHub 仓库</span>
+		</a>
+		<a href="https://github.com/qualialabsAI/SmoothConv/blob/main/README.md">
+			<span class="i18n-en">Documentation &amp; Citation</span>
+			<span class="i18n-zh">技术文档与引用</span>
+		</a>
+	</div>
+
+	<footer class="site-footer">
+		<p>Co-developed by ASLP@NPU &amp; QualiaLabs</p>
+		<p><a href="mailto:jimz@qualialabs.ai">jimz@qualialabs.ai</a></p>
+	</footer>
+
+</main>
+<script>
+(function () {
+	var STORAGE_KEY = 'smoothconv-demo-lang';
+	var titles = {
+		'en': 'SmoothConv & DuplexConv: Large-Scale Chinese Full-Duplex Speech Datasets for Conversational AI',
+		'zh-CN': 'SmoothConv & DuplexConv：面向会话式 AI 的大规模中文全双工语音数据集'
+	};
+	var btnZh = document.getElementById('lang-zh');
+	var btnEn = document.getElementById('lang-en');
+
+	function setLang(lang) {
+		document.documentElement.lang = lang;
+		localStorage.setItem(STORAGE_KEY, lang);
+		btnZh.classList.toggle('active', lang === 'zh-CN');
+		btnEn.classList.toggle('active', lang === 'en');
+		document.title = titles[lang] || titles.en;
+	}
+
+	btnZh.addEventListener('click', function () { setLang('zh-CN'); });
+	btnEn.addEventListener('click', function () { setLang('en'); });
+
+	var saved = localStorage.getItem(STORAGE_KEY);
+	var initial = saved || (navigator.language && navigator.language.toLowerCase().indexOf('zh') === 0 ? 'zh-CN' : 'en');
+	setLang(initial);
+})();
+</script>
+</body>
+</html>
