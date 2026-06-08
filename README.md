@@ -7,8 +7,9 @@
 
 <p align="center">
   <a href=""><img src="https://img.shields.io/badge/arXiv-Paper-COLOR.svg" alt="arXiv"></a>
+  <a href="https://qualialabsai.github.io/SmoothConv-DuplexConv"><img src="https://img.shields.io/badge/%F0%9F%8E%AC%20Demo-Page-2563eb" alt="Demo Page"></a>
   <a href="https://huggingface.co/datasets/qualialabsAI"><img src="https://img.shields.io/badge/%F0%9F%A4%97%20HuggingFace-Dataset-yellow" alt="HuggingFace"></a>
-  <a href="https://github.com/qualialabsAI/SmoothConv-DuplexConv"><img src="https://img.shields.io/badge/GitHub-Repo-green" alt="GitHub"></a>
+  <a href="https://github.com/qualialabsAI/SmoothConv"><img src="https://img.shields.io/badge/GitHub-Repo-green" alt="GitHub"></a>
 </p>
 
 This is the official repository for the **SmoothConv** and **DuplexConv** datasets, co-developed by **ASLP@NPU** and **QualiaLabs**.
@@ -19,9 +20,7 @@ Open-source Chinese speech corpora remain dominated by single-speaker, read, or 
 
 **SmoothConv** and **DuplexConv** address this gap with **2,100 hours** of natural Chinese multi-party dialogue in **Tutoring** and **Social Chat**. **SmoothConv** (100h) provides expert human annotations for fine-grained analysis and benchmarking; **DuplexConv** (2,000h) scales coverage via an LLM-assisted pipeline with transcripts, turn structure, and scene-level context. Together they support research on turn-taking, interruption handling, and full-duplex spoken dialogue.
 
-<p align="center">
-  <strong><a href="https://qualialabsai.github.io/SmoothConv-DuplexConv">Demo Page</a></strong> — Annotation sample videos and dataset distribution charts.
-</p>
+> 🎬 **[Demo Page](https://qualialabsai.github.io/SmoothConv-DuplexConv)** · Annotation sample videos and dataset distribution charts.
 
 ---
 
@@ -116,6 +115,6 @@ If you use SmoothConv or DuplexConv in your research, please cite:
   title        = {SmoothConv and DuplexConv: Large-Scale Chinese Full-Duplex Speech Datasets for Conversational AI},
   year         = {2026},
   publisher    = {GitHub},
-  howpublished = {\url{https://github.com/qualialabsAI/SmoothConv-DuplexConv}}
+  howpublished = {\url{https://github.com/qualialabsAI/SmoothConv}}
 }
 ```
