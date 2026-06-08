@@ -9,7 +9,7 @@
   <a href=""><img src="https://img.shields.io/badge/arXiv-Paper-COLOR.svg" alt="arXiv"></a>
   <a href="https://qualialabsai.github.io/SmoothConv-DuplexConv"><img src="https://img.shields.io/badge/%F0%9F%8E%AC%20Demo-Page-2563eb" alt="Demo Page"></a>
   <a href="https://huggingface.co/datasets/qualialabsAI"><img src="https://img.shields.io/badge/%F0%9F%A4%97%20HuggingFace-Dataset-yellow" alt="HuggingFace"></a>
-  <a href="https://github.com/qualialabsAI/SmoothConv"><img src="https://img.shields.io/badge/GitHub-Repo-green" alt="GitHub"></a>
+  <a href="https://github.com/qualialabsAI/SmoothConv-DuplexConv"><img src="https://img.shields.io/badge/GitHub-Repo-green" alt="GitHub"></a>
 </p>
 
 This is the official repository for the **SmoothConv** and **DuplexConv** datasets, co-developed by **ASLP@NPU** and **QualiaLabs**.
@@ -101,7 +101,7 @@ For questions or collaboration: [jimz@qualialabs.ai](mailto:jimz@qualialabs.ai)
 
 ## License
 
-Released under [CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+Released under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).
 
 ---
 
@@ -115,6 +115,6 @@ If you use SmoothConv or DuplexConv in your research, please cite:
   title        = {SmoothConv and DuplexConv: Large-Scale Chinese Full-Duplex Speech Datasets for Conversational AI},
   year         = {2026},
   publisher    = {GitHub},
-  howpublished = {\url{https://github.com/qualialabsAI/SmoothConv}}
+  howpublished = {\url{https://github.com/qualialabsAI/SmoothConv-DuplexConv}}
 }
 ```
