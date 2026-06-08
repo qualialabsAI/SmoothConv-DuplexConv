@@ -665,18 +665,36 @@
 		</h2>
 		<div class="i18n-en">
 			<p>
-				Open-source Chinese speech resources remain dominated by single-channel or scripted speech data. <strong>Large-scale, multi-channel datasets of spontaneous full-duplex dialogue</strong>—with turn overlaps, backchannels, pauses, and real-time interruptions—are still scarce. We present <strong>SmoothConv</strong> and <strong>DuplexConv</strong>: <strong>2,100 hours</strong> of multi-party Chinese conversations in <strong>Tutoring</strong> and <strong>Social Chat</strong>, collected from natural multi-speaker settings for full-duplex interaction research.
+				Open-source Chinese speech corpora have primarily focused on single-speaker, read speech, or scripted interactions, while large-scale datasets capturing natural full-duplex conversational dynamics remain limited. In particular, publicly available resources rarely provide multi-channel recordings of spontaneous multi-party conversations with overlapping speech, backchannels, interruptions, pauses, and other interaction phenomena that are fundamental to human communication.
 			</p>
 			<p>
-				The two datasets pair <strong>precision with scale</strong>. <strong>SmoothConv</strong> (100h) offers expert human annotation on real multi-party conversations—transcripts with millisecond-level timestamps at segment and turn boundaries, turn-taking states, overlaps, pauses, acoustic events, and speaker gender/emotion—for fine-tuning and benchmarking. <strong>DuplexConv</strong> (2,000h) applies an LLM labeling pipeline to the same sources, yielding transcripts, turn structure, and scene-level context labels for Speech LLM pre-training at scale. Together they complement each other for fine-grained evaluation and large-scale pre-training of full-duplex spoken dialogue systems.
+				To address this gap, we present <strong>SmoothConv</strong> and <strong>DuplexConv</strong>, a pair of complementary Chinese conversational speech datasets comprising a total of <strong>2,100 hours</strong> of naturally occurring multi-party interactions collected from <strong>Tutoring</strong> and <strong>Social Chat</strong> scenarios. The datasets are designed to facilitate research on full-duplex spoken dialogue, turn-taking modeling, and interruption handling.
+			</p>
+			<p>
+				<strong>SmoothConv</strong> contains 100 hours of carefully curated conversations with expert human annotations, including high-quality transcripts, millisecond-level timestamps, turn boundaries, overlap regions, pause information, speaker attributes, and interaction-related labels. It serves as a benchmark resource for fine-grained conversational analysis and supervised model training.
+			</p>
+			<p>
+				<strong>DuplexConv</strong> scales the corpus to 2,000 hours through an LLM-assisted annotation pipeline, providing large-scale transcripts, turn structures, speaker information, and scene-level contextual labels.
+			</p>
+			<p>
+				Together, <strong>SmoothConv</strong> and <strong>DuplexConv</strong> establish a unified resource for studying conversational behaviors in realistic full-duplex settings, supporting research that spans fine-grained interaction modeling and robust speech understanding.
 			</p>
 		</div>
 		<div class="i18n-zh">
 			<p>
-				当前开源中文语音数据仍以单通道或脚本化对话为主，<strong>大规模、多通道、真实自发式全双工对话数据</strong>——涵盖话轮重叠、附和、停顿与实时打断——仍十分稀缺。我们发布 <strong>SmoothConv</strong> 与 <strong>DuplexConv</strong>：同源采集 <strong>2,100 小时</strong>多方中文自然对话，覆盖<strong>教育</strong>与<strong>闲聊</strong>场景，面向全双工口语交互研究。
+				开源中文语音语料库先前主要面向单人朗读或脚本化交互，而能够刻画自然全双工会话动态的大规模数据集仍然有限。尤其是，公开资源中鲜有提供多通道、真实自发式多方对话录音，涵盖重叠语音、附和、打断、停顿等对人类交流至关重要的交互现象。
 			</p>
 			<p>
-				两个数据集分别侧重<strong>标注精度与数据规模</strong>。<strong>SmoothConv</strong>（100 小时）对真实多方对话进行人工精标，涵盖分段与话轮边界的毫秒级时间戳转写、话轮状态、重叠区段、停顿、声音事件及说话人性别/情感等标签，适用于全双工模型的微调与基准评测。<strong>DuplexConv</strong>（2,000 小时）对同源对话进行大模型自动标注，提供转写、话轮结构与场景语境标签，支撑 Speech LLM 大规模预训练。二者在同一语料体系下互补，分别服务于精细评测与大规模预训练。
+				为填补这一空白，我们发布 <strong>SmoothConv</strong> 与 <strong>DuplexConv</strong> 两个互补的中文会话语音数据集，合计 <strong>2,100 小时</strong>自然发生的多方交互，采集自<strong>教育</strong>与<strong>闲聊</strong>场景。数据集旨在支持全双工口语对话、话轮建模与打断处理等方面的研究。
+			</p>
+			<p>
+				<strong>SmoothConv</strong> 包含 100 小时精心筛选的对话及人工精标，提供高质量转写、毫秒级时间戳、话轮边界、重叠区段、停顿信息、说话人属性及交互相关标签，可作为细粒度会话分析与监督模型训练的基准资源。
+			</p>
+			<p>
+				<strong>DuplexConv</strong> 通过大模型辅助标注流水线将语料扩展至 2,000 小时，提供大规模转写、话轮结构、说话人信息与场景级语境标签。
+			</p>
+			<p>
+				<strong>SmoothConv</strong> 与 <strong>DuplexConv</strong> 共同构成统一资源，用于在真实全双工场景下研究会话行为，支持从细粒度交互建模到稳健语音理解的研究。
 			</p>
 		</div>
 	</div>
