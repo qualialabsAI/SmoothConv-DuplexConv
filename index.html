@@ -146,16 +146,17 @@
 			box-shadow: var(--shadow-lg);
 		}
 
-		.hero-panel.surface::before {
-			content: "";
-			position: absolute;
+		.scroll-progress {
+			position: fixed;
 			top: 0;
-			left: 10%;
-			right: 10%;
+			left: 0;
+			z-index: 1000;
 			height: 3px;
-			border-radius: 0 0 4px 4px;
+			width: 0;
 			background: linear-gradient(90deg, var(--smooth), #6366f1, var(--duplex));
-			opacity: 0.85;
+			box-shadow: 0 0 8px rgba(37, 99, 235, 0.35);
+			pointer-events: none;
+			transition: width 0.12s ease-out;
 		}
 
 		.dataset-panel.smooth.surface {
@@ -214,6 +215,7 @@
 			.bg-orb { animation: none; }
 			.section-head h2::after { animation: none; }
 			.reveal { opacity: 1; transform: none; transition: none; }
+			.scroll-progress { transition: none; }
 			.surface-interactive:hover,
 			.sample-fig:hover video,
 			.download-bar a:hover { transform: none; }
@@ -298,22 +300,33 @@
 		}
 
 		.hero-caption {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
 			padding: 1rem 0 0;
+			text-align: center;
 		}
 
-		.hero-caption p {
+		.hero-caption > p,
+		.hero-caption > nav {
 			margin: 0;
 			line-height: 1.6;
 		}
 
 		.hero-title {
 			font-family: "Source Serif 4", "Noto Serif SC", serif;
-			font-size: 1.1rem;
-			font-weight: 500;
-			color: var(--muted);
-			letter-spacing: -0.01em;
-			margin: 0;
-			line-height: 1.45;
+			font-size: 1.4rem;
+			font-weight: 600;
+			color: var(--ink);
+			letter-spacing: -0.015em;
+			line-height: 1.4;
+			max-width: 36em;
+			text-align: center;
+		}
+
+		.hero-title span {
+			display: block;
+			text-align: center;
 		}
 
 		.hero-sub {
@@ -329,6 +342,18 @@
 			color: #8b95a5;
 			letter-spacing: 0.06em;
 			text-transform: uppercase;
+		}
+
+		.hero-org a {
+			color: inherit;
+			border-bottom: 1px solid rgba(139, 149, 165, 0.45);
+			text-decoration: none;
+			transition: color 0.15s, border-color 0.15s;
+		}
+
+		.hero-org a:hover {
+			color: var(--smooth);
+			border-bottom-color: rgba(37, 99, 235, 0.4);
 		}
 
 		.hero-stats {
@@ -449,6 +474,50 @@
 				rgba(255, 255, 255, 0.78) 0%,
 				rgba(248, 250, 252, 0.65) 100%
 			);
+		}
+
+		.ethics-card {
+			padding: 1.75rem 2rem;
+			background: linear-gradient(
+				160deg,
+				rgba(255, 255, 255, 0.76) 0%,
+				rgba(255, 251, 235, 0.35) 100%
+			);
+			border-left: 3px solid #d97706;
+		}
+
+		.ethics-card ul {
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+
+		.ethics-card li {
+			position: relative;
+			padding-left: 1.1rem;
+			font-size: 14.5px;
+			line-height: 1.8;
+			color: var(--muted);
+		}
+
+		.ethics-card li + li {
+			margin-top: 0.9rem;
+		}
+
+		.ethics-card li::before {
+			content: "";
+			position: absolute;
+			left: 0;
+			top: 0.68em;
+			width: 5px;
+			height: 5px;
+			border-radius: 50%;
+			background: linear-gradient(135deg, #d97706, #f59e0b);
+		}
+
+		.ethics-card li strong {
+			color: var(--ink);
+			font-weight: 600;
 		}
 
 		.section {
@@ -773,12 +842,13 @@
 			.site-header { padding: 1.25rem 1rem 0; }
 			.page { padding: 1.25rem 1rem 3rem; }
 			.hero-panel { padding: 1.5rem 1rem 1.15rem; }
-			.hero-title { font-size: 1rem; }
+			.hero-title { font-size: 1.15rem; }
 			.lang-switch { top: 0.65rem; right: 0.65rem; }
 			.nav-links a { padding: 0.35rem 0.75rem; font-size: 13px; }
 			.hero-stats { gap: 0.4rem; }
 			.hero-stat { font-size: 11.5px; padding: 0.3rem 0.65rem; }
-			.intro-card { padding: 1.25rem 1.15rem; }
+			.intro-card,
+			.ethics-card { padding: 1.25rem 1.15rem; }
 			.section-head h2 { font-size: 1.3rem; }
 			.compare-row { gap: 1rem; }
 			.stat-row { grid-template-columns: 1fr; }
@@ -787,6 +857,8 @@
 </head>
 
 <body>
+
+<div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
 
 <div class="bg-orbs" aria-hidden="true">
 	<div class="bg-orb bg-orb-blue"></div>
@@ -811,7 +883,7 @@
 					<span class="i18n-en">Large-Scale Chinese Full-Duplex Speech Datasets for Conversational AI</span>
 					<span class="i18n-zh">面向会话式 AI 的大规模中文全双工语音数据集</span>
 				</p>
-				<p class="hero-org">ASLP@NPU · QualiaLabs</p>
+				<p class="hero-org"><a href="https://www.npu-aslp.org" target="_blank" rel="noopener">ASLP@NPU</a> · QualiaLabs</p>
 				<nav class="nav-links">
 					<a href="#samples">
 						<span class="i18n-en">Samples</span>
@@ -820,6 +892,10 @@
 					<a href="#statistics">
 						<span class="i18n-en">Statistics</span>
 						<span class="i18n-zh">数据统计</span>
+					</a>
+					<a href="#ethics">
+						<span class="i18n-en">Ethics</span>
+						<span class="i18n-zh">伦理声明</span>
 					</a>
 					<a class="ext" href="https://huggingface.co/datasets/qualialabsAI" target="_blank" rel="noopener">HuggingFace ↗</a>
 					<a class="ext github" href="https://github.com/qualialabsAI/SmoothConv-DuplexConv" target="_blank" rel="noopener">GitHub ↗</a>
@@ -844,7 +920,7 @@
 				Open-source Chinese speech corpora have primarily focused on single-speaker, read speech, or scripted interactions. Large-scale datasets that capture natural full-duplex conversational dynamics remain limited. In particular, publicly available resources rarely provide multi-channel recordings of spontaneous multi-party conversations with overlapping speech, backchannels, interruptions, pauses, and other interaction phenomena fundamental to human communication.
 			</p>
 			<p>
-				To address this gap, we present <strong>SmoothConv</strong> and <strong>DuplexConv</strong>, a pair of complementary Chinese conversational speech datasets comprising a total of <strong>2,100 hours</strong> of naturally occurring multi-party interactions collected from <strong>Tutoring</strong> and <strong>Social Chat</strong> scenarios. The datasets are designed to facilitate research on full-duplex spoken dialogue, turn-taking modeling, and interruption handling.
+				To address this gap, we release <strong>SmoothConv</strong> and <strong>DuplexConv</strong>, a pair of complementary Chinese multi-channel conversational speech datasets comprising a total of <strong>2,100 hours</strong> of naturally occurring multi-party interactions collected from <strong>Tutoring</strong> and <strong>Social Chat</strong> scenarios, to support research on full-duplex spoken dialogue, turn-taking modeling, and interruption handling.
 			</p>
 			<p>
 				<strong>SmoothConv</strong> contains 100 hours of carefully curated conversations with expert human annotations, including high-quality transcripts, millisecond-level timestamps, turn boundaries, overlap regions, pause information, speaker attributes, and interaction-related labels. It serves as a benchmark resource for fine-grained conversational analysis and supervised model training.
@@ -861,7 +937,7 @@
 				开源中文语音语料库先前主要面向单人朗读或脚本化交互，能够刻画自然全双工会话动态的大规模数据集仍然有限。尤其是，公开资源中鲜有提供多通道、真实自发式多方对话录音，涵盖重叠语音、附和、打断、停顿等对人类交流至关重要的交互现象。
 			</p>
 			<p>
-				为填补这一空白，我们发布 <strong>SmoothConv</strong> 与 <strong>DuplexConv</strong> 两个互补的中文会话语音数据集，合计 <strong>2,100 小时</strong>自然发生的多方交互，采集自<strong>教育</strong>与<strong>闲聊</strong>场景，旨在支持全双工口语对话、话轮建模与打断处理等方面的研究。
+				为填补这一空白，我们发布 <strong>SmoothConv</strong> 与 <strong>DuplexConv</strong> 两个互补的中文多通道会话语音数据集，合计 <strong>2,100 小时</strong>自然发生的多方交互，采集自<strong>教育</strong>与<strong>闲聊</strong>场景，旨在支持全双工口语对话、话轮建模与打断处理等方面的研究。
 			</p>
 			<p>
 				<strong>SmoothConv</strong> 包含 100 小时精心筛选的对话及人工精标，提供高质量转写、毫秒级时间戳、话轮边界、重叠区段、停顿信息、说话人属性及交互相关标签，可作为细粒度会话分析与监督模型训练的基准资源。
@@ -1118,8 +1194,37 @@
 		</a>
 	</div>
 
+	<section class="section reveal" id="ethics">
+		<div class="section-head">
+			<h2>
+				<span class="i18n-en">Ethics Statement</span>
+				<span class="i18n-zh">伦理声明</span>
+			</h2>
+			<p>
+				<span class="i18n-en">Guidelines for the responsible collection, release, and use of SmoothConv and DuplexConv.</span>
+				<span class="i18n-zh">SmoothConv 与 DuplexConv 数据采集、发布与使用的伦理指引。</span>
+			</p>
+		</div>
+		<div class="ethics-card surface">
+			<ul class="i18n-en">
+				<li><strong>Informed consent.</strong> Conversations were recorded with the knowledge and consent of participants. Personal identifiers have been removed or anonymized prior to release.</li>
+				<li><strong>Privacy protection.</strong> The datasets are released for academic and research purposes only. Users must not attempt to re-identify speakers or reconstruct private information from the audio or annotations.</li>
+				<li><strong>Intended use.</strong> SmoothConv and DuplexConv are intended for research on spoken dialogue, turn-taking, and speech understanding. They must not be used for unauthorized surveillance, impersonation, or generating deceptive content.</li>
+				<li><strong>Limitations &amp; bias.</strong> Annotations may contain errors; DuplexConv labels are machine-assisted. Researchers should account for domain, demographic, and annotation bias when training or evaluating models.</li>
+				<li><strong>Responsible use.</strong> By using these datasets, you agree to comply with applicable laws and ethical guidelines. Report suspected misuse to <a href="mailto:jimz@qualialabs.ai">jimz@qualialabs.ai</a>.</li>
+			</ul>
+			<ul class="i18n-zh">
+				<li><strong>知情同意。</strong>所有对话均在参与者知情并同意的前提下录制；发布前已去除或匿名化可识别个人身份的信息。</li>
+				<li><strong>隐私保护。</strong>数据集仅供学术与研究使用，不得尝试重新识别说话人身份，或从音频与标注中还原私人信息。</li>
+				<li><strong>用途限定。</strong>SmoothConv 与 DuplexConv 旨在支持口语对话、话轮建模与语音理解等研究，不得用于未经授权的监控、身份仿冒或生成欺骗性内容。</li>
+				<li><strong>局限与偏差。</strong>标注可能存在误差；DuplexConv 含机器辅助标签。研究与建模时应注意场景、人群与标注方式带来的偏差。</li>
+				<li><strong>负责任使用。</strong>使用本数据集即表示同意遵守相关法律法规与伦理规范。如发现滥用行为，请联系 <a href="mailto:jimz@qualialabs.ai">jimz@qualialabs.ai</a>。</li>
+			</ul>
+		</div>
+	</section>
+
 	<footer class="site-footer">
-		<p>Co-developed by ASLP@NPU &amp; QualiaLabs</p>
+		<p>Co-developed by <a href="https://www.npu-aslp.org" target="_blank" rel="noopener">ASLP@NPU</a> &amp; QualiaLabs</p>
 		<p><a href="mailto:jimz@qualialabs.ai">jimz@qualialabs.ai</a></p>
 	</footer>
 
@@ -1148,6 +1253,17 @@
 	var saved = localStorage.getItem(STORAGE_KEY);
 	var initial = saved || (navigator.language && navigator.language.toLowerCase().indexOf('zh') === 0 ? 'zh-CN' : 'en');
 	setLang(initial);
+
+	var progressBar = document.getElementById('scroll-progress');
+	function updateScrollProgress() {
+		var scrollTop = window.scrollY || document.documentElement.scrollTop;
+		var docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+		var pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+		progressBar.style.width = pct + '%';
+	}
+	window.addEventListener('scroll', updateScrollProgress, { passive: true });
+	window.addEventListener('resize', updateScrollProgress);
+	updateScrollProgress();
 
 	if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
 		var reveals = document.querySelectorAll('.reveal:not(.visible)');

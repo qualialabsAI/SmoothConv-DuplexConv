@@ -9,7 +9,7 @@
   <a href=""><img src="https://img.shields.io/badge/arXiv-Paper-COLOR.svg" alt="arXiv"></a>
   <a href="https://qualialabsai.github.io/SmoothConv-DuplexConv"><img src="https://img.shields.io/badge/%F0%9F%8E%AC%20Demo-Page-2563eb" alt="Demo Page"></a>
   <a href="https://huggingface.co/datasets/qualialabsAI"><img src="https://img.shields.io/badge/%F0%9F%A4%97%20HuggingFace-Dataset-yellow" alt="HuggingFace"></a>
-  <a href="https://github.com/qualialabsAI/SmoothConv-DuplexConv"><img src="https://img.shields.io/badge/GitHub-Repo-green" alt="GitHub"></a>
+  <a href="https://github.com/qualialabsAI/SmoothConv"><img src="https://img.shields.io/badge/GitHub-Repo-green" alt="GitHub"></a>
 </p>
 
 This is the official repository for the **SmoothConv** and **DuplexConv** datasets, co-developed by **ASLP@NPU** and **QualiaLabs**.
@@ -99,6 +99,18 @@ For questions or collaboration: [jimz@qualialabs.ai](mailto:jimz@qualialabs.ai)
 
 ---
 
+## Ethics Statement
+
+Guidelines for the responsible collection, release, and use of SmoothConv and DuplexConv.
+
+- **Informed consent.** Conversations were recorded with the knowledge and consent of participants. Personal identifiers have been removed or anonymized prior to release.
+- **Privacy protection.** The datasets are released for academic and research purposes only. Users must not attempt to re-identify speakers or reconstruct private information from the audio or annotations.
+- **Intended use.** SmoothConv and DuplexConv are intended for research on spoken dialogue, turn-taking, and speech understanding. They must not be used for unauthorized surveillance, impersonation, or generating deceptive content.
+- **Limitations & bias.** Annotations may contain errors; DuplexConv labels are machine-assisted. Researchers should account for domain, demographic, and annotation bias when training or evaluating models.
+- **Responsible use.** By using these datasets, you agree to comply with applicable laws and ethical guidelines. Report suspected misuse to [jimz@qualialabs.ai](mailto:jimz@qualialabs.ai).
+
+---
+
 ## License
 
 Released under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).
@@ -110,11 +122,11 @@ Released under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-
 If you use SmoothConv or DuplexConv in your research, please cite:
 
 ```bibtex
-@misc{smoothconv_duplexconv2026,
-  author       = {{ASLP@NPU} and {QualiaLabs}},
-  title        = {SmoothConv and DuplexConv: Large-Scale Chinese Full-Duplex Speech Datasets for Conversational AI},
-  year         = {2026},
-  publisher    = {GitHub},
-  howpublished = {\url{https://github.com/qualialabsAI/SmoothConv-DuplexConv}}
+@article{wang2026duoconv,
+  title   = {DuoConv: Large-Scale Chinese Full-Duplex Speech Datasets for Conversational AI},
+  author  = {Chengyou Wang and Chunjiang He and Jingbin Hu and Shuiyuan Wang and Bo Wu and Yuyu Ji and Jimeng Zheng and Ruofei Chen and Lei Xie},
+  journal = {arXiv preprint arXiv:0000.00000},
+  year    = {2026},
+  note    = {Placeholder; paper forthcoming}
 }
 ```
