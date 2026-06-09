@@ -937,7 +937,7 @@
 				开源中文语音语料库先前主要面向单人朗读或脚本化交互，能够刻画自然全双工会话动态的大规模数据集仍然有限。尤其是，公开资源中鲜有提供多通道、真实自发式多方对话录音，涵盖重叠语音、附和、打断、停顿等对人类交流至关重要的交互现象。
 			</p>
 			<p>
-				为填补这一空白，我们发布 <strong>SmoothConv</strong> 与 <strong>DuplexConv</strong> 两个互补的中文多通道会话语音数据集，合计 <strong>2,100 小时</strong>自然发生的多方交互，采集自<strong>教育</strong>与<strong>闲聊</strong>场景，旨在支持全双工口语对话、话轮建模与打断处理等方面的研究。
+				为填补这一空白，我们发布 <strong>SmoothConv</strong> 与 <strong>DuplexConv</strong> 两个互补的中文多通道会话语音数据集，共收录 <strong>2,100 小时</strong>真实自然的多方对话，覆盖<strong>教育</strong>与<strong>闲聊</strong>两类场景，旨在支持全双工口语对话、话轮建模与打断处理等方面的研究。
 			</p>
 			<p>
 				<strong>SmoothConv</strong> 包含 100 小时精心筛选的对话及人工精标，提供高质量转写、毫秒级时间戳、话轮边界、重叠区段、停顿信息、说话人属性及交互相关标签，可作为细粒度会话分析与监督模型训练的基准资源。
@@ -946,7 +946,7 @@
 				<strong>DuplexConv</strong> 通过大模型辅助标注流水线将语料扩展至 2,000 小时，提供大规模转写、话轮结构、说话人信息与场景级语境标签。
 			</p>
 			<p>
-				<strong>SmoothConv</strong> 与 <strong>DuplexConv</strong> 共同构成统一资源，用于在真实全双工场景下研究会话行为，支持从细粒度交互建模到稳健语音理解的研究。
+				<strong>SmoothConv</strong> 与 <strong>DuplexConv</strong> 相辅相成，构成面向真实全双工场景的统一数据资源，可支撑从细粒度交互建模到鲁棒语音理解的系统性研究。
 			</p>
 		</div>
 		</div>
@@ -961,11 +961,11 @@
 			</h2>
 			<p>
 				<span class="i18n-en">Annotation visualizations for SmoothConv and DuplexConv in Tutoring and Social Chat scenarios.</span>
-				<span class="i18n-zh">SmoothConv 与 DuplexConv 在教育与闲聊场景下的标注可视化样例。</span>
+				<span class="i18n-zh">SmoothConv 与 DuplexConv 在教育、闲聊场景下的标注可视化示例。</span>
 			</p>
 			<p class="section-note">
 				<span class="i18n-en">For preview, each video is a 45-second clip excerpted from the full conversation.</span>
-				<span class="i18n-zh">为便于展示，以下视频均为从完整对话中截取的 45 秒片段。</span>
+				<span class="i18n-zh">以下视频均为便于预览而从完整对话中截取的 45 秒片段。</span>
 			</p>
 		</div>
 
@@ -1149,7 +1149,7 @@
 			</h2>
 			<p>
 				<span class="i18n-en">Overview of the open-source SmoothConv and DuplexConv data composition.</span>
-				<span class="i18n-zh">SmoothConv 与 DuplexConv 开源版本的数据构成概览。</span>
+				<span class="i18n-zh">SmoothConv 与 DuplexConv 开源发布版本的数据分布概览。</span>
 			</p>
 		</div>
 
@@ -1202,7 +1202,7 @@
 			</h2>
 			<p>
 				<span class="i18n-en">Guidelines for the responsible collection, release, and use of SmoothConv and DuplexConv.</span>
-				<span class="i18n-zh">SmoothConv 与 DuplexConv 数据采集、发布与使用的伦理指引。</span>
+				<span class="i18n-zh">关于 SmoothConv 与 DuplexConv 数据采集、发布与使用的伦理说明。</span>
 			</p>
 		</div>
 		<div class="ethics-card surface">
@@ -1214,11 +1214,11 @@
 				<li><strong>Responsible use.</strong> By using these datasets, you agree to comply with applicable laws and ethical guidelines. Report suspected misuse to <a href="mailto:jimz@qualialabs.ai">jimz@qualialabs.ai</a>.</li>
 			</ul>
 			<ul class="i18n-zh">
-				<li><strong>知情同意。</strong>所有对话均在参与者知情并同意的前提下录制；发布前已去除或匿名化可识别个人身份的信息。</li>
-				<li><strong>隐私保护。</strong>数据集仅供学术与研究使用，不得尝试重新识别说话人身份，或从音频与标注中还原私人信息。</li>
-				<li><strong>用途限定。</strong>SmoothConv 与 DuplexConv 旨在支持口语对话、话轮建模与语音理解等研究，不得用于未经授权的监控、身份仿冒或生成欺骗性内容。</li>
-				<li><strong>局限与偏差。</strong>标注可能存在误差；DuplexConv 含机器辅助标签。研究与建模时应注意场景、人群与标注方式带来的偏差。</li>
-				<li><strong>负责任使用。</strong>使用本数据集即表示同意遵守相关法律法规与伦理规范。如发现滥用行为，请联系 <a href="mailto:jimz@qualialabs.ai">jimz@qualialabs.ai</a>。</li>
+				<li><strong>知情同意。</strong>全部对话均在参与者知情同意的情况下采集；发布前已去除或匿名化处理可识别个人身份的信息。</li>
+				<li><strong>隐私保护。</strong>数据集仅供学术与研究使用，不得试图重新识别说话人身份，或从音频与标注中还原个人隐私信息。</li>
+				<li><strong>用途限定。</strong>SmoothConv 与 DuplexConv 旨在服务口语对话、话轮建模与语音理解等研究，不得用于未经授权的监控、身份冒充或生成具有欺骗性的内容。</li>
+				<li><strong>局限与偏差。</strong>标注可能存在误差，DuplexConv 还包含机器辅助标签。开展研究与模型训练时，应充分考虑场景、人群分布及标注方式可能带来的偏差。</li>
+				<li><strong>负责任使用。</strong>使用本数据集即表示同意遵守相关法律法规与伦理规范。如发现疑似滥用行为，请联系 <a href="mailto:jimz@qualialabs.ai">jimz@qualialabs.ai</a>。</li>
 			</ul>
 		</div>
 	</section>
