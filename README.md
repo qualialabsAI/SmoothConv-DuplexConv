@@ -113,7 +113,7 @@ Guidelines for the responsible collection, release, and use of SmoothConv and Du
 
 ## License
 
-Released under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).
+Released under [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/).
 
 ---
 
