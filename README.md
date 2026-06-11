@@ -16,9 +16,9 @@ This is the official repository for the **SmoothConv** and **DuplexConv** datase
 
 ## Introduction
 
-Open-source Chinese speech corpora remain dominated by single-speaker, read, or scripted data. **Multi-channel, spontaneous full-duplex multi-party conversation**—with overlaps, backchannels, interruptions, and pauses—is still scarce.
+Open-source Chinese speech corpora remain dominated by single-speaker, read, or scripted data. **Multi-channel, spontaneous full-duplex multi-party conversation**, with overlapping speech, backchannels, interruptions, pauses, and turn transitions, is still scarce.
 
-**SmoothConv** and **DuplexConv** address this gap with **2,100 hours** of natural Chinese multi-party dialogue in **Tutoring** and **Social Chat**. **SmoothConv** (100h) provides expert human annotations for fine-grained analysis and benchmarking; **DuplexConv** (2,000h) scales coverage via an LLM-assisted pipeline with transcripts, turn structure, and scene-level context. Together they support research on turn-taking, interruption handling, and full-duplex spoken dialogue.
+**SmoothConv** and **DuplexConv** are constructed from the **same underlying conversational sources** and are designed to complement each other. Together they provide **2,100 hours** of natural Chinese dialogue in **Tutoring** and **Social Chat**. **SmoothConv** (100 hours) offers high-fidelity expert human annotations for benchmarking and supervised training; **DuplexConv** (2,000 hours) provides large-scale LLM-assisted annotations for Speech LLM pre-training and data-driven modeling of conversational speech systems.
 
 > 🎬 **[Demo Page](https://qualialabsai.github.io/SmoothConv-DuplexConv)** · Annotation sample videos and dataset distribution charts.
 
@@ -41,46 +41,40 @@ Open-source Chinese speech corpora remain dominated by single-speaker, read, or 
 
 ## Dataset Overview
 
-Recordings are **multi-channel** captures of real-world, unscripted dialogue in **Tutoring** and **Social Chat**. Two complementary annotation modes are derived from the same or closely related conversation sources—one emphasizing annotation precision, one emphasizing coverage at scale:
+### SmoothConv (100 Hours — Expert Human Annotation)
 
-### SmoothConv (~100 Hours — Expert Human Annotation)
+**SmoothConv** contains **100 hours** of naturally occurring multi-party Chinese conversations in multi-channel **Tutoring** and **Social Chat** recordings. Unlike corpora dominated by read or scripted speech, it captures realistic full-duplex dynamics: overlapping speech, backchannels, interruptions, pauses, and turn transitions. Trained experts provide fine-grained labels, including:
 
-A high-precision dataset for fine-tuning and benchmarking full-duplex dialogue models. Human annotators label real multi-party Chinese conversations with:
+- **Aligned transcripts** with millisecond-level timestamps
+- **Turn-taking & overlap** (speaker switches, overlaps, floor-holding)
+- **Pauses & sound events** (laughter, coughs, breaths, silence, etc.)
+- **Speaker attributes** (gender, age, emotion, and related interaction tags)
 
-- **Aligned transcripts**: ASR text with millisecond-level timestamps at segment and turn boundaries.
-- **Turn-taking & overlap**: Speaker switches, overlaps, and floor-holding—key signals for VAD and turn prediction.
-- **Pauses & sound events**: Laughter, coughs, breaths, background noise, and silence.
-- **Speaker attributes**: Gender and emotion tags per segment.
+### DuplexConv (2,000 Hours — LLM-Assisted Annotation)
 
-### DuplexConv (~2,000 Hours — LLM-Assisted Annotation at Scale)
+**DuplexConv** scales to **2,000 hours** in the same domains, sharing a unified data design with SmoothConv. An LLM-assisted pipeline produces transcripts, speaker-aware conversational structures, turn-level interaction information, and scene-level contextual labels for large-scale Speech LLM pre-training and data-driven modeling.
 
-DuplexConv draws from the **same or closely related conversation sources** as SmoothConv at much larger scale (~2,000 hours). An **automated LLM pipeline** produces transcripts, turn structure, and scene-level context labels.
-
-- **Large-scale coverage**: ~2,000 hours of multi-turn Chinese dialogue.
-- **Automated labels**: Dialogue content, speaker tone, emotional atmosphere, and conversational context.
+Together, SmoothConv and DuplexConv bridge fine-grained human annotation and large-scale training in realistic full-duplex settings. See the [Demo Page](https://qualialabsai.github.io/SmoothConv-DuplexConv) for distribution charts.
 
 ---
 
 ## Dataset Statistics
 
-### Global Overview
-
-| Metrics | SmoothConv (Human Annotation) | DuplexConv (LLM Annotation) |
+| | SmoothConv | DuplexConv |
 | :--- | :---: | :---: |
-| **Language** | Chinese (zh) | Chinese (zh) |
-| **Total Audio Duration** | **100.53 hours** | **2000.21 hours** |
-| **Total Audio Files** | 2,503 | 93,709 |
-| **Mean Duration** | 144.59 sec | 76.84 sec |
-| **Duration Range** | 60.0 – 634.7 sec | 8.0 – 618.3 sec |
+| **Annotation** | Expert human | LLM-assisted |
+| **Duration** | 100.53 h | 2,000.21 h |
+| **Audio files** | 2,503 | 93,709 |
+| **Mean clip length** | 144.6 s | 76.8 s |
+| **Clip length range** | 60.0 – 634.7 s | 8.0 – 618.3 s |
 | **Domains** | Tutoring, Social Chat | Tutoring, Social Chat |
 
-### SmoothConv
 
-The current open-source release contains **100.53 hours** of conversational audio across **Tutoring** and **Social Chat**. Turn-taking labels include **complete**, **incomplete**, **backchannel**, and **wait**.
+---
 
-### FastTurn Test Set
+## FastTurn Test Set
 
-A dedicated evaluation set for turn-state prediction, built from a subset of SmoothConv data. It combines real-world segments with 1,000 synthetically generated **wait** samples (text via DeepSeek V3, audio via IndexTTS2). Since **wait** is rare in natural speech, synthetic samples supplement the set.
+A related **turn-state evaluation benchmark** derived from SmoothConv, available on [HuggingFace](https://huggingface.co/datasets/ASLP-lab/FastTurn-Testset). It combines real conversational segments with 1,000 synthesized **wait** samples (text: DeepSeek V3; audio: IndexTTS2) to supplement the naturally rare wait class.
 
 | Turn State | Source | Samples | Duration (h) |
 |------------|--------|--------:|-------------:|
@@ -89,7 +83,7 @@ A dedicated evaluation set for turn-state prediction, built from a subset of Smo
 | Backchannel | real-world | 3,080 | 0.42 |
 | Wait | synthesized | 1,000 | 0.71 |
 
-For details, see the [FastTurn repository](https://github.com/ASLP-lab/FastTurn).
+See the [FastTurn repository](https://github.com/ASLP-lab/FastTurn) for details.
 
 ---
 
