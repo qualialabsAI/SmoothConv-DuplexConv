@@ -18,7 +18,7 @@ This is the official repository for the **SmoothConv** and **DuplexConv** datase
 
 Open-source Chinese speech corpora remain dominated by single-speaker, read, or scripted data. **Multi-channel, spontaneous full-duplex multi-party conversation**, with overlapping speech, backchannels, interruptions, pauses, and turn transitions, is still scarce.
 
-**SmoothConv** and **DuplexConv** are constructed from the **same underlying conversational sources** and are designed to complement each other. Together they provide **2,100 hours** of natural Chinese dialogue in **Tutoring** and **Social Chat**. **SmoothConv** (100 hours) offers high-fidelity expert human annotations for benchmarking and supervised training; **DuplexConv** (2,000 hours) provides large-scale LLM-assisted annotations for Speech LLM pre-training and data-driven modeling of conversational speech systems.
+**SmoothConv** and **DuplexConv** are constructed from the **same underlying conversational sources** and are designed to complement each other. Together they provide **2,100 hours** of natural Chinese dialogue in **Tutoring** and **Social Chat**. In the released directory layout, **Tutoring** data appear under folders prefixed with `edu` or `Edu`; **Social Chat** data appear under folders prefixed with `none_Edu`. **SmoothConv** (100 hours) offers high-fidelity expert human annotations for benchmarking and supervised training; **DuplexConv** (2,000 hours) provides large-scale LLM-assisted annotations for Speech LLM pre-training and data-driven modeling of conversational speech systems.
 
 > 🎬 **[Demo Page](https://qualialabsai.github.io/SmoothConv-DuplexConv)** · Annotation sample videos and dataset distribution charts.
 
@@ -67,7 +67,7 @@ Together, SmoothConv and DuplexConv bridge fine-grained human annotation and lar
 | **Audio files** | 2,503 | 93,709 |
 | **Mean clip length** | 144.6 s | 76.8 s |
 | **Clip length range** | 60.0 – 634.7 s | 8.0 – 618.3 s |
-| **Domains** | Tutoring, Social Chat | Tutoring, Social Chat |
+| **Domains** | Tutoring (`edu*` / `Edu*`), Social Chat (`none_Edu*`) | Tutoring (`edu*` / `Edu*`), Social Chat (`none_Edu*`) |
 
 
 ---
@@ -115,10 +115,11 @@ Released under [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/).
 
 If you use SmoothConv or DuplexConv in your research, please cite:
 
+
 ```bibtex
 @article{wang2026duoconv,
   title   = {DuoConv: Large-Scale Chinese Full-Duplex Speech Datasets for Conversational AI},
-  author  = {Chengyou Wang and Chunjiang He and Bo Wu and Yuyu Ji and Jimeng Zheng and Ruofei Chen and Lei Xie},
+  author  = {Chengyou Wang and Chunjiang He and Zhou Zhu and Lei Xie},
   journal = {arXiv preprint arXiv:0000.00000},
   year    = {2026},
   note    = {Placeholder; paper forthcoming}
