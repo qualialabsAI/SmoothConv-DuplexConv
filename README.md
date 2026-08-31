@@ -117,8 +117,8 @@ If you use SmoothConv or DuplexConv in your research, please cite:
 
 
 ```bibtex
-@article{wang2026duoconv,
-  title   = {DuoConv: Large-Scale Chinese Full-Duplex Speech Datasets for Conversational AI},
+@article{wang2026duplexconv,
+  title   = {DuplexConv: Large-Scale Chinese Full-Duplex Speech Datasets for Conversational AI},
   author  = {Chengyou Wang and Chunjiang He and Zhou Zhu and Lei Xie},
   journal = {arXiv preprint arXiv:0000.00000},
   year    = {2026},
