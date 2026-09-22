@@ -72,19 +72,7 @@ Together, SmoothConv and DuplexConv bridge fine-grained human annotation and lar
 
 ---
 
-## FastTurn Test Set
-
-A related **turn-state evaluation benchmark** derived from SmoothConv, available on [HuggingFace](https://huggingface.co/datasets/ASLP-lab/FastTurn-Testset). It combines real conversational segments with 1,000 synthesized **wait** samples (text: DeepSeek V3; audio: IndexTTS2) to supplement the naturally rare wait class.
-
-| Turn State | Source | Samples | Duration (h) |
-|------------|--------|--------:|-------------:|
-| Complete | real-world | 14,709 | 9.64 |
-| Incomplete | real-world | 3,643 | 2.15 |
-| Backchannel | real-world | 3,080 | 0.42 |
-| Wait | synthesized | 1,000 | 0.71 |
-
-See the [FastTurn repository](https://github.com/ASLP-lab/FastTurn) for details.
-
+## Smoothconv Benchmark
 ---
 
 ## Contact
