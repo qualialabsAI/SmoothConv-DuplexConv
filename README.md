@@ -105,11 +105,13 @@ If you use SmoothConv or DuplexConv in your research, please cite:
 
 
 ```bibtex
-@article{wang2026duplexconv,
-  title   = {DuplexConv: Large-Scale Chinese Full-Duplex Speech Datasets for Conversational AI},
-  author  = {Chengyou Wang and Chunjiang He and Zhou Zhu and Lei Xie},
-  journal = {arXiv preprint arXiv:0000.00000},
-  year    = {2026},
-  note    = {Placeholder; paper forthcoming}
+@misc{wang2026smoothconvduplexconvcomplementarymandarin,
+      title={SmoothConv and DuplexConv: Complementary Mandarin Multi-Party Conversational Speech Corpora for Speech Interaction}, 
+      author={Chengyou Wang and Mingchen Shao and Chunjiang He and Zeyu Zhu and Jierui Guo and Bingshen Mu and Zikai Liu and Hanke Xie and Yuhang Dai and Zhou Zhu and Lei Xie},
+      year={2026},
+      eprint={2610.11150},
+      archivePrefix={arXiv},
+      primaryClass={eess.AS},
+      url={https://arxiv.org/abs/2610.11150}, 
 }
 ```
